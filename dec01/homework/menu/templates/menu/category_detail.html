@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ category.name }} - Meals</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        h1 {
+            color: white;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .back-link {
+            background: white;
+            color: #f5576c;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: transform 0.3s;
+        }
+        .back-link:hover {
+            transform: scale(1.05);
+        }
+        .meals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .meal-card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-left: 5px solid #f5576c;
+        }
+        .meal-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 12px rgba(0,0,0,0.2);
+        }
+        .meal-card h3 {
+            color: #f5576c;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+        .no-data {
+            text-align: center;
+            color: white;
+            font-size: 1.2em;
+            padding: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🍴 {{ category.name }}</h1>
+            <a href="{% url 'menu_index' %}" class="back-link">← Back to Categories</a>
+        </div>
+        
+        {% if meals %}
+            <div class="meals-grid">
+                {% for meal in meals %}
+                    <div class="meal-card">
+                        <h3>{{ meal.name }}</h3>
+                        <p><strong>Category:</strong> {{ meal.category_fk.name }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="no-data">
+                <p>No meals available in this category.</p>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>

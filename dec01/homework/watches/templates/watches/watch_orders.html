@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ watch.name }} - Orders</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        h1 {
+            color: white;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .back-link {
+            background: white;
+            color: #fa709a;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: transform 0.3s;
+        }
+        .back-link:hover {
+            transform: scale(1.05);
+        }
+        .watch-info {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .watch-info h2 {
+            color: #fa709a;
+            margin-bottom: 10px;
+        }
+        .watch-info p {
+            color: #555;
+            margin: 5px 0;
+        }
+        .orders-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .order-item {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-left: 5px solid #fee140;
+        }
+        .order-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 8px 12px rgba(0,0,0,0.2);
+        }
+        .order-item h3 {
+            color: #fa709a;
+            margin-bottom: 8px;
+            font-size: 1.2em;
+        }
+        .order-item p {
+            color: #555;
+            margin: 5px 0;
+        }
+        .no-data {
+            text-align: center;
+            color: white;
+            font-size: 1.2em;
+            padding: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📦 Orders for {{ watch.name }}</h1>
+            <a href="{% url 'company_watches' watch.company_fk.id %}" class="back-link">← Back to Watches</a>
+        </div>
+        
+        <div class="watch-info">
+            <h2>{{ watch.name }}</h2>
+            <p><strong>Company:</strong> {{ watch.company_fk.name }}</p>
+        </div>
+        
+        {% if orders %}
+            <div class="orders-list">
+                {% for order in orders %}
+                    <div class="order-item">
+                        <h3>Order: {{ order.name }}</h3>
+                        <p><strong>Watch:</strong> {{ order.watch_fk.name }}</p>
+                        <p><strong>Order ID:</strong> #{{ order.id }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="no-data">
+                <p>No orders for this watch yet.</p>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
