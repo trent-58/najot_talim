@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image {{ image_number }} - Gallery</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            font-size: 2.2em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .image-container {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            margin-bottom: 30px;
+        }
+
+        .image-display {
+            width: 100%;
+            max-height: 600px;
+            object-fit: contain;
+            display: block;
+            background: #f5f5f5;
+        }
+
+        .image-info {
+            padding: 30px;
+        }
+
+        .image-info h2 {
+            color: #333;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+        }
+
+        .image-info p {
+            color: #666;
+            font-size: 1em;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+        }
+
+        .nav-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1em;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            cursor: pointer;
+        }
+
+        .nav-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .nav-btn.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .counter {
+            color: white;
+            font-size: 1.1em;
+            font-weight: bold;
+            text-align: center;
+            flex-grow: 1;
+        }
+
+        .gallery-link {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            margin-bottom: 20px;
+            transition: background 0.3s ease;
+        }
+
+        .gallery-link:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .image-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-box {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-box strong {
+            display: block;
+            color: #667eea;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+
+        .stat-box span {
+            display: block;
+            color: #333;
+            font-size: 0.85em;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .image-display {
+                max-height: 400px;
+            }
+
+            .navigation {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            .nav-btn {
+                flex: 1;
+                min-width: 100px;
+            }
+
+            .counter {
+                width: 100%;
+                order: 3;
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <a href="/gallery/" class="gallery-link">← Back to Gallery</a>
+            <h1>Image Gallery - Picture {{ image_number }}</h1>
+        </header>
+
+        <div class="image-container">
+            <img src="{{ image_path }}" alt="Image {{ image_number }}" class="image-display">
+            <div class="image-info">
+                <h2>{{ image_title }}</h2>
+                <p>{{ image_description }}</p>
+                
+                <div class="image-stats">
+                    <div class="stat-box">
+                        <strong>Image Number:</strong>
+                        <span>#{{ image_number }}</span>
+                    </div>
+                    <div class="stat-box">
+                        <strong>Filename:</strong>
+                        <span>{{ image_filename }}</span>
+                    </div>
+                    <div class="stat-box">
+                        <strong>Format:</strong>
+                        <span>JPEG</span>
+                    </div>
+                </div>
+
+                <div class="navigation">
+                    {% if previous_image %}
+                        <a href="/image/{{ previous_image }}/" class="nav-btn">← Previous</a>
+                    {% else %}
+                        <button class="nav-btn disabled" disabled>← Previous</button>
+                    {% endif %}
+                    
+                    <span class="counter">{{ image_number }} / 3</span>
+                    
+                    {% if next_image %}
+                        <a href="/image/{{ next_image }}/" class="nav-btn">Next →</a>
+                    {% else %}
+                        <button class="nav-btn disabled" disabled>Next →</button>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

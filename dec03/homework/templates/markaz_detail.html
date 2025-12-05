@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }} - Markaz</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .breadcrumb {
+            margin-bottom: 15px;
+        }
+
+        .breadcrumb a {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.9em;
+            margin-right: 10px;
+            transition: background 0.3s ease;
+        }
+
+        .breadcrumb a:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        header h1 {
+            font-size: 2.2em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .content-container {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            margin-bottom: 30px;
+        }
+
+        .content-header {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 30px;
+            color: white;
+        }
+
+        .content-header h2 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .content-body {
+            padding: 30px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .info-box {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #f5576c;
+        }
+
+        .info-box strong {
+            display: block;
+            color: #f5576c;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+
+        .info-box span {
+            display: block;
+            color: #333;
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+
+        .description {
+            color: #666;
+            font-size: 1em;
+            line-height: 1.8;
+            margin-bottom: 25px;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 8px;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1em;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            cursor: pointer;
+        }
+
+        .nav-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-btn.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .counter {
+            color: #666;
+            font-weight: bold;
+            text-align: center;
+            flex-grow: 1;
+        }
+
+        .gallery-link {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .gallery-link a {
+            display: inline-block;
+            background: rgba(245, 87, 108, 0.2);
+            color: #f5576c;
+            padding: 10px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.3s ease;
+        }
+
+        .gallery-link a:hover {
+            background: rgba(245, 87, 108, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .content-header h2 {
+                font-size: 1.5em;
+            }
+
+            .navigation {
+                flex-direction: column;
+            }
+
+            .nav-btn {
+                width: 100%;
+            }
+
+            .counter {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="breadcrumb">
+                <a href="/">← Home</a>
+                <a href="/markaz/gallery/">Markaz</a>
+            </div>
+            <h1>🎓 Markaz - {{ type_label }}</h1>
+        </header>
+
+        <div class="content-container">
+            <div class="content-header">
+                <h2>{{ title }}</h2>
+            </div>
+            <div class="content-body">
+                <div class="gallery-link">
+                    <a href="/markaz/gallery/">← Back to Categories</a>
+                </div>
+
+                <div class="info-grid">
+                    {% for item in items %}
+                        <div class="info-box">
+                            <strong>{{ item.label }}</strong>
+                            <span>{{ item.value }}</span>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <div class="description">
+                    <strong>Details:</strong>
+                    <p>{{ description }}</p>
+                </div>
+
+                <div class="navigation">
+                    {% if previous_id %}
+                        <a href="/markaz/{{ item_type }}/{{ previous_id }}/" class="nav-btn">← Previous</a>
+                    {% else %}
+                        <button class="nav-btn disabled" disabled>← Previous</button>
+                    {% endif %}
+                    
+                    <span class="counter">Item {{ current_index }} / {{ total_count }}</span>
+                    
+                    {% if next_id %}
+                        <a href="/markaz/{{ item_type }}/{{ next_id }}/" class="nav-btn">Next →</a>
+                    {% else %}
+                        <button class="nav-btn disabled" disabled>Next →</button>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

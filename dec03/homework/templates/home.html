@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Gallery</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 60px;
+        }
+
+        header h1 {
+            font-size: 3em;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
+            animation: fadeInDown 0.8s ease;
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .gallery-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+
+        .option-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            animation: slideIn 0.8s ease;
+        }
+
+        .option-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+        }
+
+        .option-header {
+            padding: 40px 30px 30px;
+            text-align: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .option-icon {
+            font-size: 4em;
+            margin-bottom: 15px;
+        }
+
+        .option-header h2 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .option-header p {
+            font-size: 0.95em;
+            opacity: 0.9;
+        }
+
+        .option-content {
+            padding: 30px;
+            text-align: center;
+        }
+
+        .option-content p {
+            color: #666;
+            font-size: 1em;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .view-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.05em;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .view-btn:hover {
+            transform: scale(1.08);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        footer {
+            text-align: center;
+            color: white;
+            opacity: 0.8;
+            margin-top: 60px;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            header p {
+                font-size: 1em;
+            }
+
+            .gallery-options {
+                grid-template-columns: 1fr;
+            }
+
+            .option-icon {
+                font-size: 3em;
+            }
+
+            .option-header h2 {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📷 Gallery Portal</h1>
+            <p>Choose a collection to explore</p>
+        </header>
+
+        <div class="gallery-options">
+            <div class="option-card">
+                <div class="option-header">
+                    <div class="option-icon">⚙️</div>
+                    <h2>Texnika</h2>
+                    <p>Technology Items</p>
+                </div>
+                <div class="option-content">
+                    <p>Browse our collection of technical equipment and devices. Explore various technology items with detailed information.</p>
+                    <a href="/texnika/gallery/" class="view-btn">Explore Texnika →</a>
+                </div>
+            </div>
+
+            <div class="option-card">
+                <div class="option-header">
+                    <div class="option-icon">🎓</div>
+                    <h2>Markaz</h2>
+                    <p>Education Center</p>
+                </div>
+                <div class="option-content">
+                    <p>Discover our educational center with courses, instructors, and student information. Learn more about our comprehensive programs.</p>
+                    <a href="/markaz/gallery/" class="view-btn">Explore Markaz →</a>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2025 Gallery Portal. All collections are managed with care.</p>
+        </footer>
+    </div>
+</body>
+</html>
