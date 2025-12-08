@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Markaz</title>
+    <style>
+        body {
+            display: flex;
+            height: 100vh;
+            font-size: 14px;
+            margin: 0;
+            padding: 0;
+        }
+        h1, .item, a  {
+            color: black;
+            text-decoration: none;
+            padding-left: 5em;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="items">
+        {% for item in items %}
+        <a href="{{item.path}}">
+            <div class="item">
+                <h1>{{item.name}}</h1>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</body>
+</html>

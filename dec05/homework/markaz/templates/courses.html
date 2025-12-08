@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Courses</title>
+</head>
+<body>
+    <div>
+        {% for i in items %}
+        <ol><a href="{%url 'show_course' i.pk%}">{{i.title}}</a></ol>
+        {% endfor %}
+
+        <div class="buttons">
+            <button type="button" onclick="window.location.href='add'">Add</button>
+
+            <button type="button" onclick="history.back()">Back</button>
+
+        </div>
+    </div>
+</body>
+</html>

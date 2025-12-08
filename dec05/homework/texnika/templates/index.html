@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{title}}</title>
+</head>
+<body>
+    <div class="container">
+        <h1>{{title}}</h1>
+        <div class="items">
+            {% for i in items %}
+            <ol><a href="{{i.path}}">{{i.name}}</a></ol>
+            {% endfor %}
+        </div>
+        <div class="buttons">
+            <button type="button" onclick="window.location.href='/'">Back to Main</button>
+        </div>
+    </div>
+</body>
+</html>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            font-family: Arial, sans-serif;
+            align-items: center;
+            height: 100vh;
+            width: 100vw;
+            margin:0;
+            padding: 0;
+        }
+
+        .apps {
+            display: flex;
+            gap: 20px;
+
+        }
+
+        .app {
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+            max-width: fit-content;
+        }
+
+        .app:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .app-heading {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .app-paragraph {
+            font-size: 1em;
+            color: #666;
+        }
+
+        img {
+            max-width: 400px;
+            height: auto;
+        }
+    </style>
+
+</head>
+<body>
+<div class="apps">
+    {% for app in apps %}
+    <a href="{{ app.path }}">
+    <div class="app">
+        <img src="{{app.image_url}}" alt="picture">
+        <h1 class="app-heading">{{app.name}}</h1>
+        <p class="app-paragraph">P1</p>
+    </div>
+    </a>
+    {% endfor %}
+</div>
+</body>
+</html>

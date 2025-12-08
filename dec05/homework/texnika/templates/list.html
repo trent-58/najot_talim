@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{title}}</title>
+</head>
+<body>
+    <div class="container">
+        <h1>{{title}}</h1>
+        <div class="items">
+            {% for i in items %}
+            <ol><a href="{{i.id}}">{{i.name}} {{i.title}}</a></ol>
+            {% endfor %}
+        </div>
+        <div class="buttons">
+            <button type="button" onclick="window.location.href='add'">{{add}}</button>
+            <button type="button" onclick="window.location.href='{% url back %}'">Back</button>
+        </div>
+    </div>
+</body>
+</html>
