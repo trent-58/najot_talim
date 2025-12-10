@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Products</title>
+    <style>
+        body { font-family: Arial; margin: 20px; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        a { margin-right: 10px; color: blue; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .btn { padding: 10px 20px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 3px; }
+        .btn:hover { background-color: #45a049; }
+    </style>
+</head>
+<body>
+    <h1>Products</h1>
+    <a href="{% url 'product_create' %}" class="btn">Add New Product</a>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Category</th>
+                <th>Quantity</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+            <tr>
+                <td>{{ product.name }}</td>
+                <td>${{ product.price }}</td>
+                <td>{{ product.category }}</td>
+                <td>{{ product.quantity }}</td>
+                <td>
+                    <a href="{% url 'product_detail' product.pk %}">View</a>
+                    <a href="{% url 'product_update' product.pk %}">Edit</a>
+                    <a href="{% url 'product_delete' product.pk %}">Delete</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">No products found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

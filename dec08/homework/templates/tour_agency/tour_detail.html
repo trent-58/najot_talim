@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ tour.title }}</title>
+    <style>
+        body { font-family: Arial; margin: 20px; }
+        .detail { background-color: #f9f9f9; padding: 20px; border-radius: 3px; max-width: 600px; }
+        a { margin-right: 10px; color: blue; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .btn { padding: 10px 20px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 3px; margin-top: 20px; display: inline-block; }
+        .btn:hover { background-color: #45a049; }
+        .btn-danger { background-color: #f44336; }
+        .btn-danger:hover { background-color: #da190b; }
+    </style>
+</head>
+<body>
+    <h1>{{ tour.title }}</h1>
+    <div class="detail">
+        <p><strong>Destination:</strong> {{ tour.destination }}</p>
+        <p><strong>Price:</strong> ${{ tour.price }}</p>
+        <p><strong>Duration:</strong> {{ tour.duration_days }} days</p>
+        <p><strong>Available Seats:</strong> {{ tour.available_seats }}</p>
+        <p><strong>Start Date:</strong> {{ tour.start_date }}</p>
+        <p><strong>Description:</strong> {{ tour.description }}</p>
+        
+        <a href="{% url 'tour_update' tour.pk %}" class="btn">Edit</a>
+        <a href="{% url 'tour_delete' tour.pk %}" class="btn btn-danger">Delete</a>
+        <a href="{% url 'tour_list' %}" class="btn">Back</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tours</title>
+    <style>
+        body { font-family: Arial; margin: 20px; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        a { margin-right: 10px; color: blue; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .btn { padding: 10px 20px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 3px; }
+        .btn:hover { background-color: #45a049; }
+    </style>
+</head>
+<body>
+    <h1>Tours</h1>
+    <a href="{% url 'tour_create' %}" class="btn">Add New Tour</a>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Destination</th>
+                <th>Price</th>
+                <th>Duration</th>
+                <th>Available Seats</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for tour in tours %}
+            <tr>
+                <td>{{ tour.title }}</td>
+                <td>{{ tour.destination }}</td>
+                <td>${{ tour.price }}</td>
+                <td>{{ tour.duration_days }} days</td>
+                <td>{{ tour.available_seats }}</td>
+                <td>
+                    <a href="{% url 'tour_detail' tour.pk %}">View</a>
+                    <a href="{% url 'tour_update' tour.pk %}">Edit</a>
+                    <a href="{% url 'tour_delete' tour.pk %}">Delete</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6">No tours found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

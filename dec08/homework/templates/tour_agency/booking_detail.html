@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ booking.customer_name }} - Booking</title>
+    <style>
+        body { font-family: Arial; margin: 20px; }
+        .detail { background-color: #f9f9f9; padding: 20px; border-radius: 3px; max-width: 600px; }
+        a { margin-right: 10px; color: blue; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .btn { padding: 10px 20px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 3px; margin-top: 20px; display: inline-block; }
+        .btn:hover { background-color: #45a049; }
+        .btn-danger { background-color: #f44336; }
+        .btn-danger:hover { background-color: #da190b; }
+    </style>
+</head>
+<body>
+    <h1>Booking Details</h1>
+    <div class="detail">
+        <p><strong>Customer:</strong> {{ booking.customer_name }}</p>
+        <p><strong>Email:</strong> {{ booking.customer_email }}</p>
+        <p><strong>Phone:</strong> {{ booking.phone_number }}</p>
+        <p><strong>Tour:</strong> {{ booking.tour.title }}</p>
+        <p><strong>Number of People:</strong> {{ booking.number_of_people }}</p>
+        <p><strong>Total Price:</strong> ${{ booking.total_price }}</p>
+        <p><strong>Booking Date:</strong> {{ booking.booking_date }}</p>
+        
+        <a href="{% url 'booking_update' booking.pk %}" class="btn">Edit</a>
+        <a href="{% url 'booking_delete' booking.pk %}" class="btn btn-danger">Delete</a>
+        <a href="{% url 'booking_list' %}" class="btn">Back</a>
+    </div>
+</body>
+</html>

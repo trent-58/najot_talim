@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bookings</title>
+    <style>
+        body { font-family: Arial; margin: 20px; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        a { margin-right: 10px; color: blue; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .btn { padding: 10px 20px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 3px; }
+        .btn:hover { background-color: #45a049; }
+    </style>
+</head>
+<body>
+    <h1>Bookings</h1>
+    <a href="{% url 'booking_create' %}" class="btn">Add New Booking</a>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Customer</th>
+                <th>Tour</th>
+                <th>People</th>
+                <th>Total Price</th>
+                <th>Booking Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for booking in bookings %}
+            <tr>
+                <td>{{ booking.customer_name }}</td>
+                <td>{{ booking.tour.title }}</td>
+                <td>{{ booking.number_of_people }}</td>
+                <td>${{ booking.total_price }}</td>
+                <td>{{ booking.booking_date }}</td>
+                <td>
+                    <a href="{% url 'booking_detail' booking.pk %}">View</a>
+                    <a href="{% url 'booking_update' booking.pk %}">Edit</a>
+                    <a href="{% url 'booking_delete' booking.pk %}">Delete</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6">No bookings found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
