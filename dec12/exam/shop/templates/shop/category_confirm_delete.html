@@ -1,0 +1,12 @@
+{% extends "shop/base.html" %}
+{% block title %}Delete Category · SimpleShop{% endblock %}
+{% block content %}
+<h1>Delete Category</h1>
+<p>Are you sure you want to delete category “{{ object.name }}”?</p>
+
+<form method="post">
+  {% csrf_token %}
+  <button type="submit">Yes, delete</button>
+  <a href="{% url 'shop:category_list' %}">Cancel</a>
+</form>
+{% endblock %}

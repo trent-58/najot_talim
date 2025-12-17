@@ -1,0 +1,26 @@
+{% extends "shop/base.html" %}
+{% block title %}Categories · SimpleShop{% endblock %}
+{% block content %}
+<h1>Categories</h1>
+
+<p>
+  <a href="{% url 'shop:category_create' %}">+ Create Category</a>
+  | <a href="{% url 'shop:home' %}">Home</a>
+</p>
+
+{% if categories %}
+  <ul>
+    {% for c in categories %}
+      <li>
+        <strong><a href="{% url 'shop:category_detail' c.pk %}">{{ c.name }}</a></strong>
+        {% if c.description %}<br><small>{{ c.description|truncatewords:20 }}</small>{% endif %}
+        <br>
+        <a href="{% url 'shop:category_edit' c.pk %}">Edit</a>
+        · <a href="{% url 'shop:category_delete' c.pk %}">Delete</a>
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>No categories yet.</p>
+{% endif %}
+{% endblock %}

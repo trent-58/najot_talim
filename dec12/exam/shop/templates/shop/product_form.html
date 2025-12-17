@@ -1,0 +1,15 @@
+{% extends "shop/base.html" %}
+{% block title %}{% if form.instance.pk %}Edit Product{% else %}Create Product{% endif %} · SimpleShop{% endblock %}
+{% block content %}
+<h1>{% if form.instance.pk %}Edit Product{% else %}Create Product{% endif %}</h1>
+
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Save</button>
+  <a href="{% url 'shop:product_list' %}">Cancel</a>
+  {% if form.instance.pk %}
+  · <a href="{% url 'shop:product_delete' form.instance.pk %}">Delete</a>
+  {% endif %}
+</form>
+{% endblock %}

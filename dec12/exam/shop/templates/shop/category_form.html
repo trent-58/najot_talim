@@ -1,0 +1,16 @@
+{% extends "shop/base.html" %}
+{% block title %}{% if form.instance.pk %}Edit Category{% else %}Create Category{% endif %} · SimpleShop{% endblock %}
+{% block content %}
+<h1>{% if form.instance.pk %}Edit Category{% else %}Create Category{% endif %}</h1>
+
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Save</button>
+  <a href="{% url 'shop:category_list' %}">Cancel</a>
+  {% if form.instance.pk %}
+  · <a href="{% url 'shop:category_delete' form.instance.pk %}">Delete</a>
+  {% endif %}
+  
+</form>
+{% endblock %}
