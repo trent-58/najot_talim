@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}{{ category.name }}{% endblock %}
+
+{% block content %}
+<h1>{{ category.name }}</h1>
+{% if user.is_authenticated %}
+<div class="add-product-section">
+    <a href="{% url 'product-create' %}" class="btn-add">Add New Product</a>
+</div>
+{% endif %}
+<div class="products-table">
+    {% for p in products %}
+    <a href="{%url 'product' p.pk%}">
+        <div class="product-table">
+            <img class="products-table-image" src="{{ p.image_url }}" alt="">
+            <div class="caption">
+                <p class="product">{{ p.name }}</p>
+                <p class="category">{{ p.category.name }}</p>
+            </div>
+        </div>
+    </a>
+    {% endfor %}
+</div>
+
+{% endblock %}

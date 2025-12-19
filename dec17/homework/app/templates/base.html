@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Asimovian&family=Quantico:ital,wght@0,400;0,900;1,400;1,900&display=swap" rel="stylesheet">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>{% block title %}My Site{% endblock %}</title>
+
+</head>
+<body>
+    <header>
+        <nav>
+            <div  style="display: flex; flex-direction: row; align-items: center; gap: 20px;"> 
+                <p class="header-home" ><a href="/"><i class="bi bi-house-door-fill"></i> Home</a></p>
+                <span><a href="{%url 'categories'%}">Categories</a></span>
+            </div>
+            <div>
+                <ul class="header-links" >
+                    {% for c in header_categories %}
+                    <li class="header-link"><a href="{% url 'category-list' c.pk %}">{{c.name}}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div>
+                <ul class="lr-links">
+                    {% if user.is_authenticated %}
+                    <li class="lr-link"><a href="{% url 'profile' %}">{{ user.name }}</a></li>
+                    <li class="lr-link"><a href="{% url 'logout' %}">Logout</a></li>
+                    {% else %}
+                    <li class="lr-link"><a href="{% url 'login' %}">Login</a></li>
+                    <li class="lr-link"><a href="{% url 'register' %}">Register</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <main>
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% block content %}{% endblock %}
+    </main>
+    <footer>
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Atque velit accusantium aperiam sequi laborum ex nemo ab natus repellat neque? Consequuntur rerum repellendus, officia dignissimos vitae quaerat. Ut, nihil maxime.
+    </footer>
+
+</body>
+</html>

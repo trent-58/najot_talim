@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}{{product.name}}{% endblock %}
+
+{% block content %}
+<a href="{% url 'category-list' product.category.pk %}"><span class="back-button"><i class="bi bi-arrow-left-short"></i>Go Back</span></a>
+<div class="product-view">
+    <img src="{{ product.image_url }}" alt="">
+    <div class="caption">
+        <span class="product">Name: {{product.name}}</span>
+        <span>Category: <span class="category"><a href="{% url 'category-list' product.category.pk %}">{{product.category.name}}</a></span></span>
+        {% if user.is_authenticated %}
+        <div class="product-actions">
+            <a href="{% url 'product-edit' product.pk %}" class="btn-primary">Edit</a>
+            <a href="{% url 'product-delete' product.pk %}" class="btn-danger">Delete</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

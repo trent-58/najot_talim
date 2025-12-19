@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}{% if form.instance.pk %}Edit Category{% else %}Create Category{% endif %}{% endblock %}
+{% block content %}
+<div class="form-container">
+  <h1>{% if form.instance.pk %}Edit Category{% else %}Create Category{% endif %}</h1>
+
+  <form method="post" class="form">
+    {% csrf_token %}
+    {% if form.non_field_errors %}
+    <div class="error-messages">
+      {% for error in form.non_field_errors %}
+      <p class="error">{{ error }}</p>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="form-group">
+      {{ form.name.label_tag }}
+      {{ form.name }}
+      {% if form.name.errors %}
+      <div class="errors">
+        {% for error in form.name.errors %}
+        <p class="error">{{ error }}</p>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn-submit">Save</button>
+      <a href="{% url 'categories' %}" class="btn-secondary">Cancel</a>
+      {% if form.instance.pk %}
+      <a href="{% url 'category-delete' form.instance.pk %}" class="btn-danger">Delete</a>
+      {% endif %}
+    </div>
+  </form>
+</div>
+{% endblock %}
