@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block title %}Comment{% endblock %}
+{% block content %}
+  <h1>{% if object %}Edit comment{% else %}Add comment{% endif %}</h1>
+  <form method="post" enctype="multipart/form-data">{% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-primary" type="submit">Save</button>
+    <a class="btn btn-secondary" href="{% if object %}{{ object.product.get_absolute_url }}{% else %}{{ product.get_absolute_url }}{% endif %}">Cancel</a>
+  </form>
+{% endblock %}

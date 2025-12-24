@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+{% block title %}{{ object.title }}{% endblock %}
+{% block content %}
+  <div class="row">
+    <div class="col-md-4">
+      {% if object.image %}
+        <img src="{{ object.image.url }}" class="img-fluid" alt="{{ object.title }}">
+      {% else %}
+        <div class="bg-secondary text-white d-flex align-items-center justify-content-center" style="height:400px;">
+          <span>No Image</span>
+        </div>
+      {% endif %}
+    </div>
+    <div class="col-md-8">
+      <h1>{{ object.title }}</h1>
+      <p>{{ object.description }}</p>
+      <p><strong>Price: ${{ object.price }}</strong></p>
+      <p>Category: <a href="{{ object.category.get_absolute_url }}">{{ object.category.name }}</a></p>
+      <p>Created by: {% if object.created_by %}<a href="{% url 'users:user_detail' object.created_by.pk %}">{{ object.created_by.username }}</a>{% else %}Anonymous{% endif %}</p>
+
+      <p>
+        {% if user.is_authenticated and object.created_by and user == object.created_by %}
+          <a class="btn btn-secondary" href="{% url 'store:product_edit' object.pk %}">Edit</a>
+          <a class="btn btn-danger" href="{% url 'store:product_delete' object.pk %}">Delete</a>
+        {% endif %}
+      </p>
+
+      <h3>Other products in {{ object.category.name }}</h3>
+      <ul>
+        {% for p in other_products %}
+          <li><a href="{{ p.get_absolute_url }}">{{ p.title }}</a></li>
+        {% empty %}
+          <li>No other products.</li>
+        {% endfor %}
+      </ul>
+      <hr>
+      <h3>Comments</h3>
+      <div>
+        {% if user.is_authenticated %}
+          <form method="post" action="{% url 'store:comment_add' object.pk %}" enctype="multipart/form-data" class="mb-3">
+            {% csrf_token %}
+            <div class="mb-2">
+              <label for="id_text">Your comment</label>
+              <textarea name="text" id="id_text" class="form-control" rows="3"></textarea>
+            </div>
+            <div class="mb-2">
+              <label for="id_rating">Rating (optional)</label>
+              <select name="rating" id="id_rating" class="form-select" style="width:auto;">
+                <option value="">—</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+            </div>
+            <div class="mb-2">
+              <label for="id_image">Image (optional)</label>
+              <input type="file" name="image" id="id_image" class="form-control" />
+            </div>
+            <button class="btn btn-primary" type="submit">Add comment</button>
+          </form>
+        {% else %}
+          <p><a href="{% url 'login' %}">Log in</a> to add comments.</p>
+        {% endif %}
+
+        {% if object.comments.all %}
+          {% for c in object.comments.all %}
+            <div class="mb-3 border p-2" id="comment-{{ c.pk }}">
+              <p class="mb-1"><strong>{% if c.author %}{{ c.author.username }}{% else %}Anonymous{% endif %}</strong> <small class="text-muted">{{ c.created_at }}</small></p>
+              {% if c.rating %}
+                <p class="mb-1">
+                  {% for _ in "12345"|make_list %}
+                    {% if forloop.counter <= c.rating %}
+                      <span class="star filled">★</span>
+                    {% else %}
+                      <span class="star">★</span>
+                    {% endif %}
+                  {% endfor %}
+                  <span class="text-muted">({{ c.rating }})</span>
+                </p>
+              {% endif %}
+              <p class="mb-1">{{ c.text|linebreaksbr }}</p>
+              {% if c.image %}
+                <p><img src="{{ c.image.url }}" alt="comment image" class="img-fluid" style="max-width:200px;"></p>
+              {% endif %}
+
+              {% if user.is_authenticated and c.author and user == c.author %}
+                <p>
+                  <button class="btn btn-sm btn-secondary" type="button" onclick="toggleEditForm({{ c.pk }})">Edit</button>
+                  <form method="post" action="{% url 'store:comment_delete' c.pk %}" style="display:inline;">
+                    {% csrf_token %}
+                    <button class="btn btn-sm btn-danger" type="submit" onclick="return confirm('Delete comment?');">Delete</button>
+                  </form>
+                </p>
+
+                <form id="edit-form-{{ c.pk }}" method="post" action="{% url 'store:comment_edit' c.pk %}" enctype="multipart/form-data" style="display:none; margin-top:8px;">
+                  {% csrf_token %}
+                  <div class="mb-2">
+                    <label for="id_text_{{ c.pk }}">Edit comment</label>
+                    <textarea name="text" id="id_text_{{ c.pk }}" class="form-control" rows="3">{{ c.text }}</textarea>
+                  </div>
+                  <div class="mb-2">
+                    <label for="id_rating_{{ c.pk }}">Rating (optional)</label>
+                    <select name="rating" id="id_rating_{{ c.pk }}" class="form-select" style="width:auto;">
+                      <option value="" {% if not c.rating %}selected{% endif %}>—</option>
+                      <option value="1" {% if c.rating == 1 %}selected{% endif %}>1</option>
+                      <option value="2" {% if c.rating == 2 %}selected{% endif %}>2</option>
+                      <option value="3" {% if c.rating == 3 %}selected{% endif %}>3</option>
+                      <option value="4" {% if c.rating == 4 %}selected{% endif %}>4</option>
+                      <option value="5" {% if c.rating == 5 %}selected{% endif %}>5</option>
+                    </select>
+                  </div>
+                  <div class="mb-2">
+                    <label for="id_image_{{ c.pk }}">Replace image (optional)</label>
+                    <input type="file" name="image" id="id_image_{{ c.pk }}" class="form-control" />
+                  </div>
+                  <button class="btn btn-primary btn-sm" type="submit">Save</button>
+                  <button class="btn btn-secondary btn-sm" type="button" onclick="toggleEditForm({{ c.pk }})">Cancel</button>
+                </form>
+              {% endif %}
+            </div>
+          {% endfor %}
+        {% else %}
+          <p>No comments yet.</p>
+        {% endif %}
+      </div>
+
+      <style>
+        .star { color: #ddd; font-size:1.1rem; }
+        .star.filled { color: gold; }
+      </style>
+      <script>
+        function toggleEditForm(id) {
+          var el = document.getElementById('edit-form-' + id);
+          if (!el) return;
+          el.style.display = (el.style.display === 'none' || el.style.display === '') ? 'block' : 'none';
+        }
+      </script>
+    </div>
+  </div>
+{% endblock %}

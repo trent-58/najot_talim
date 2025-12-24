@@ -1,0 +1,1 @@
+Django>=4.2Pillow>=10.0.0
