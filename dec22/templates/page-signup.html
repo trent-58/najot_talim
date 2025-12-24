@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Sign Up - GenZ Blog{% endblock %}
+{% block description %}Create a new GenZ account{% endblock %}
+{% block keywords %}signup, register, account{% endblock %}
+
+{% block content %}
+<main class="main">
+  <div class="cover-home3">
+    <div class="container">
+      <div class="row">
+        <div class="col-xl-10 col-lg-12 m-auto">
+          <div class="text-center mt-50 pb-50">
+            <h2 class="color-linear d-inline-block">Register</h2>
+          </div>
+          <div class="box-form-login pb-50">
+            <div class="form-login bg-gray-850 border-gray-800 text-start">
+              <form action="#">
+                <div class="form-group">
+                  <input class="form-control bg-gray-850 border-gray-800" type="text" placeholder="Full name">
+                </div>
+                <div class="form-group">
+                  <input class="form-control bg-gray-850 border-gray-800" type="text" placeholder="Email">
+                </div>
+                <div class="form-group">
+                  <input class="form-control bg-gray-850 border-gray-800" type="text" placeholder="User name">
+                </div>
+                <div class="form-group position-relative">
+                  <input class="form-control bg-gray-850 border-gray-800 password" type="password" placeholder="Password"><span class="viewpass"></span>
+                </div>
+                <div class="form-group position-relative">
+                  <input class="form-control bg-gray-850 border-gray-800 password" type="password" placeholder="Confirm password"><span class="viewpass"></span>
+                </div>
+                <div class="form-group">
+                  <input class="btn btn-linear color-gray-850 hover-up" type="submit" value="Create an account">
+                </div>
+                <div class="form-group mb-0"><span>Already have an account?</span><a class="color-linear" href="#"> Sign In</a></div>
+              </form>
+            </div>
+            <div class="box-line"><span class="bg-gray-900">Or, sign up with your email</span></div>
+            <div class="box-login-gmail bg-gray-850 border-gray-800 hover-up"><a class="btn btn-login-gmail color-gray-500" href="#">Sign up with Google</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}

@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Business Card Design - Portfolio{% endblock %}
+{% block description %}Portfolio details for Business Card Design project{% endblock %}
+{% block keywords %}portfolio, design, business card{% endblock %}
+
+{% block content %}
+<main class="main">
+  <div class="cover-home3">
+    <div class="container">
+      <div class="row">
+        <div class="col-xl-1"></div>
+        <div class="col-xl-10 col-lg-12">
+          <div class="pt-30 border-bottom border-gray-800 pb-20">
+            <div class="box-breadcrumbs">
+              <ul class="breadcrumb">
+                <li><a class="home" href="{% url 'pages:home' %}">Home</a></li>
+                <li><a href="page-portfolio.html">Portfolio</a></li>
+                <li><span>Business Card Design</span></li>
+              </ul>
+            </div>
+          </div>
+          <div class="row mt-50 align-items-end">
+            <div class="col-lg-8 m-auto text-center">
+              <h2 class="color-linear">Business Card Design</h2>
+            </div>
+          </div>
+          <div class="row mt-30 mb-50">
+            <div class="swiper-container swiper-group-2">
+              <div class="swiper-wrapper wow animate__animated animate__fadeIn">
+                <div class="swiper-slide">
+                  <div class="image-detail mb-30"><img class="bdrd16" src="{% static 'assets/imgs/page/portfolio/portfolio-1.png' %}" alt="Genz"></div>
+                </div>
+                <div class="swiper-slide">
+                  <div class="image-detail mb-30"><img class="bdrd16" src="{% static 'assets/imgs/page/portfolio/portfolio-1-2.png' %}" alt="Genz"></div>
+                </div>
+                <div class="swiper-slide">
+                  <div class="image-detail mb-30"><img class="bdrd16" src="{% static 'assets/imgs/page/portfolio/portfolio-1-3.png' %}" alt="Genz"></div>
+                </div>
+                <div class="swiper-slide">
+                  <div class="image-detail mb-30"><img class="bdrd16" src="{% static 'assets/imgs/page/portfolio/portfolio-1-1.png' %}" alt="Genz"></div>
+                </div>
+              </div>
+              <div class="swiper-pagination"></div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-8">
+              <div class="content-detail border-gray-800">
+                <h3 class="color-white mb-30 wow animate__animated animate__fadeIn">Project Details</h3>
+                <p class="text-lg color-gray-500 wow animate__animated animate__fadeIn">Thirty there & time wear across days, make inside on these you. Can young a really, roses blog small of song their dreamy life pretty? Because really duo living to noteworthy bloom bell. Transform clean daydreaming cute twenty process rooms cool. White white dreamy dramatically place everything although. Place out apartment afternoon whimsical kinder, little romantic joy we flowers handmade. Thirty she a studio of she whimsical projects, afternoon effect going an floated maybe.</p>
+                <p class="text-lg color-gray-500 wow animate__animated animate__fadeIn">Tortor placerat bibendum consequat sapien, facilisi facilisi pellentesque morbi. Id consectetur ut vitae a massa a. Lacus ut bibendum sollicitudin fusce sociis mi. Dictum volutpat praesent ornare accumsan elit venenatis. Congue sodales nunc quis ultricies odio porta. Egestas mauris placerat leo phasellus ut sit.</p>
+                <div class="row mt-50 wow animate__animated animate__fadeIn">
+                  <div class="col-lg-6 gallery-left"><img class="img-bdrd-16 mb-30" src="{% static 'assets/imgs/page/portfolio/portfolio-2.png' %}" alt="Genz"></div>
+                  <div class="col-lg-6 gallery-right"><img class="img-bdrd-16 mb-20" src="{% static 'assets/imgs/page/portfolio/portfolio-3.png' %}" alt="Genz"><img class="img-bdrd-16" src="{% static 'assets/imgs/page/portfolio/portfolio-4.png' %}" alt="Genz"></div>
+                </div>
+                <p class="text-center text-lg color-gray-500 wow animate__animated animate__fadeIn">The brand identity</p>
+                <h3 class="color-white mt-50 mb-30 wow animate__animated animate__fadeIn">Hire me</h3>
+                <p class="text-lg color-gray-500 wow animate__animated animate__fadeIn">Thirty there & time wear across days, make inside on these you. Can young a really, roses blog small of song their dreamy life pretty? Because really duo living to noteworthy bloom bell. Transform clean daydreaming cute twenty process rooms cool. White white dreamy dramatically place everything although. Place out apartment afternoon whimsical kinder, little romantic joy we flowers handmade. Thirty she a studio of she whimsical projects, afternoon effect going an floated maybe.</p>
+              </div>
+              <div class="box-tags wow animate__animated animate__fadeIn"><a class="btn btn-tags bg-gray-850 border-gray-800 mr-10 hover-up" href="blog-archive.html">#Nature</a><a class="btn btn-tags bg-gray-850 border-gray-800 mr-10 hover-up" href="blog-archive.html">#Beauty</a><a class="btn btn-tags bg-gray-850 border-gray-800 mr-10 hover-up" href="blog-archive.html">#Travel Tips</a><a class="btn btn-tags bg-gray-850 border-gray-800 hover-up" href="blog-archive.html">#House</a></div>
+            </div>
+            <div class="col-lg-4">
+              <div class="sidebar">
+                <div class="box-sidebar bg-gray-850 border-gray-800">
+                  <div class="head-sidebar wow animate__animated animate__fadeIn">
+                    <h5 class="line-bottom">Project information</h5>
+                  </div>
+                  <div class="content-sidebar">
+                    <div class="list-comments">
+                      <div class="item-comment border-gray-800 wow animate__animated animate__fadeIn">
+                        <p class="color-gray-200 mb-10 text-uppercase">Category</p>
+                        <p class="color-gray-500">Graphic Design, Marketing Kitsz</p>
+                      </div>
+                      <div class="item-comment border-gray-800 wow animate__animated animate__fadeIn">
+                        <p class="color-gray-200 mb-10 text-uppercase">Client</p>
+                        <p class="color-gray-500">Orion Coporation</p>
+                      </div>
+                      <div class="item-comment border-gray-800 wow animate__animated animate__fadeIn">
+                        <p class="color-gray-200 mb-10 text-uppercase">Project date</p>
+                        <p class="color-gray-500">01 November, 2022</p>
+                      </div>
+                      <div class="item-comment border-gray-800 wow animate__animated animate__fadeIn">
+                        <p class="color-gray-200 mb-10 text-uppercase">Project URL</p>
+                        <p class="color-gray-500"><a class="text-white" href="#">www.orioncoporation.com</a></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="d-inline-block pt-10 wow animate__animated animate__fadeIn">
+                  <div class="d-flex align-item-center">
+                    <h6 class="d-inline-block color-gray-500 mr-10">Share</h6><a class="icon-media icon-fb" href="#"></a><a class="icon-media icon-tw" href="#"></a><a class="icon-media icon-printest" href="#"></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}

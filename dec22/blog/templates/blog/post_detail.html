@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}{{ post.title }} - Genz{% endblock %}
+{% block content %}
+<main class="main">
+  <div class="container mt-50">
+    <article>
+      <h1>{{ post.title }}</h1>
+      <p class="text-muted">By {{ post.author }} — {{ post.published_at }}</p>
+      {% if post.featured_image %}
+      <img src="{{ post.featured_image.url }}" alt="{{ post.title }}" class="img-fluid mb-20">
+      {% endif %}
+      <div class="post-content">{{ post.content|safe }}</div>
+    </article>
+  </div>
+</main>
+{% endblock %}

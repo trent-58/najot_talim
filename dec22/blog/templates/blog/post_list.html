@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}Blog - Genz{% endblock %}
+{% block content %}
+<main class="main">
+  <div class="container mt-50">
+    <h1>Blog</h1>
+    <div class="row">
+      <div class="col-md-8">
+        {% for post in posts %}
+        <article class="card-list-posts mb-30">
+          {% if post.featured_image %}
+          <div class="card-image"><img src="{{ post.featured_image.url }}" alt="{{ post.title }}"></div>
+          {% endif %}
+          <div class="card-info">
+            <h3><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
+            <p>{{ post.excerpt }}</p>
+          </div>
+        </article>
+        {% empty %}
+        <p>No posts yet.</p>
+        {% endfor %}
+      </div>
+      <div class="col-md-4">
+        <!-- sidebar could be extended here -->
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}

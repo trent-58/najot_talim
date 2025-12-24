@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Travel Tips - Personal Blog HTML Template{% endblock %}
+{% block description %}Explore our collection of travel tips, stories and recommendations{% endblock %}
+{% block keywords %}travel, tips, blog, articles{% endblock %}
+
+{% block content %}
+<main class="main">
+  <div class="blog-archive-header">
+    <div class="container">
+      <div class="row">
+        <div class="col-xl-1"></div>
+        <div class="col-xl-10 col-lg-12">
+          <div class="banner-text">
+            <h1 class="color-white">Travel Tips</h1>
+            <p class="color-gray-500">Explore the world with our travel guides and tips</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="archive-container">
+    <div class="container">
+      <div class="row">
+        <div class="col-xl-1"></div>
+        <div class="col-xl-10 col-lg-12">
+          <div class="row">
+            <div class="col-lg-8">
+              <!-- Blog Posts List -->
+              <div class="box-list-posts">
+                <div class="card-list-posts wow animate__animated animate__fadeIn">
+                  <div class="card-image hover-up"><a href="#"><img src="{% static 'assets/imgs/page/homepage1/img-news-1.jpg' %}" alt="Genz"></a></div>
+                  <div class="card-info"><a class="btn btn-tag bg-gray-800 hover-up" href="#">Travel Tips</a><a href="#">
+                      <h4 class="mt-15 mb-20 color-white">Helpful Tips for Working from Home as a Freelancer</h4></a>
+                    <p class="color-gray-500">Gosh jaguar ostrich quail one excited dear hello and bound and the and bland moral misheard roadrunner flapped lynx far that and jeepers giggled far and far</p>
+                    <div class="row mt-20">
+                      <div class="col-7"><a class="color-gray-700 text-sm mr-15" href="#"># Travel</a><a class="color-gray-700 text-sm" href="#"># Lifestyle</a></div>
+                      <div class="col-5 text-end"><span class="color-gray-700 text-sm timeread">3 mins read</span></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="card-list-posts wow animate__animated animate__fadeIn">
+                  <div class="card-image hover-up"><a href="#"><img src="{% static 'assets/imgs/page/homepage1/img-news-2.jpg' %}" alt="Genz"></a></div>
+                  <div class="card-info"><a class="btn btn-tag bg-gray-800 hover-up" href="#">Travel Tips</a><a href="#">
+                      <h4 class="mt-15 mb-20 color-white">Best Destinations for Summer Vacation</h4></a>
+                    <p class="color-gray-500">Discover amazing places around the world perfect for your next adventure</p>
+                    <div class="row mt-20">
+                      <div class="col-7"><a class="color-gray-700 text-sm mr-15" href="#"># Travel</a><a class="color-gray-700 text-sm" href="#"># Adventure</a></div>
+                      <div class="col-5 text-end"><span class="color-gray-700 text-sm timeread">5 mins read</span></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="card-list-posts wow animate__animated animate__fadeIn">
+                  <div class="card-image hover-up"><a href="#"><img src="{% static 'assets/imgs/page/homepage1/img-news-3.jpg' %}" alt="Genz"></a></div>
+                  <div class="card-info"><a class="btn btn-tag bg-gray-800 hover-up" href="#">Travel Tips</a><a href="#">
+                      <h4 class="mt-15 mb-20 color-white">Budget Travel Guide: How to Save Money While Exploring</h4></a>
+                    <p class="color-gray-500">Learn smart tips for traveling on a budget without compromising quality</p>
+                    <div class="row mt-20">
+                      <div class="col-7"><a class="color-gray-700 text-sm mr-15" href="#"># Travel</a><a class="color-gray-700 text-sm" href="#"># Budget</a></div>
+                      <div class="col-5 text-end"><span class="color-gray-700 text-sm timeread">4 mins read</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Pagination -->
+              <nav class="mb-50">
+                <ul class="pagination">
+                  <li class="page-item wow animate__animated animate__fadeIn" data-wow-delay=".0s"><a class="page-link page-prev" href="#"><i class="fi-rr-arrow-small-left"></i></a></li>
+                  <li class="page-item wow animate__animated animate__fadeIn" data-wow-delay=".1s"><a class="page-link" href="#">1</a></li>
+                  <li class="page-item wow animate__animated animate__fadeIn" data-wow-delay=".2s"><a class="page-link active" href="#">2</a></li>
+                  <li class="page-item wow animate__animated animate__fadeIn" data-wow-delay=".3s"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item wow animate__animated animate__fadeIn" data-wow-delay=".5s"><a class="page-link page-next" href="#"><i class="fi-rr-arrow-small-right"></i></a></li>
+                </ul>
+              </nav>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="col-lg-4">
+              <div class="sidebar">
+                <div class="box-sidebar bg-gray-850 border-gray-800">
+                  <div class="head-sidebar wow animate__animated animate__fadeIn">
+                    <h5 class="line-bottom">Search</h5>
+                  </div>
+                  <div class="content-sidebar">
+                    <form action="#" class="search-form">
+                      <input type="text" class="form-control" placeholder="Search posts...">
+                      <button type="submit" class="btn btn-primary mt-10">Search</button>
+                    </form>
+                  </div>
+                </div>
+
+                <div class="box-sidebar bg-gray-850 border-gray-800 mt-30">
+                  <div class="head-sidebar wow animate__animated animate__fadeIn">
+                    <h5 class="line-bottom">Categories</h5>
+                  </div>
+                  <div class="content-sidebar">
+                    <ul class="list-menu">
+                      <li><a class="color-gray-600" href="#">Travel (45)</a></li>
+                      <li><a class="color-gray-600" href="#">Lifestyle (32)</a></li>
+                      <li><a class="color-gray-600" href="#">Adventure (28)</a></li>
+                      <li><a class="color-gray-600" href="#">Food (21)</a></li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div class="box-sidebar bg-gray-850 border-gray-800 mt-30">
+                  <div class="head-sidebar wow animate__animated animate__fadeIn">
+                    <h5 class="line-bottom">Popular Posts</h5>
+                  </div>
+                  <div class="content-sidebar">
+                    <div class="list-posts">
+                      <div class="item-post wow animate__animated animate__fadeIn">
+                        <div class="image-post"><a href="#"><img src="{% static 'assets/imgs/page/homepage1/img-post.jpg' %}" alt="Genz"></a></div>
+                        <div class="info-post border-gray-800"><a href="#">
+                            <h6 class="color-white">Best Budget Travel Destinations</h6></a><span class="color-gray-700">12 mins read</span>
+                          <ul class="d-inline-block">
+                            <li class="color-gray-700">20 Dec 2022</li>
+                          </ul>
+                        </div>
+                      </div>
+                      <div class="item-post wow animate__animated animate__fadeIn">
+                        <div class="image-post"><a href="#"><img src="{% static 'assets/imgs/page/homepage1/img-post2.jpg' %}" alt="Genz"></a></div>
+                        <div class="info-post border-gray-800"><a href="#">
+                            <h6 class="color-white">Packing Tips for Travelers</h6></a><span class="color-gray-700">8 mins read</span>
+                          <ul class="d-inline-block">
+                            <li class="color-gray-700">18 Dec 2022</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}
+

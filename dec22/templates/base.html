@@ -1,0 +1,250 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="msapplication-TileColor" content="#0E0E0E">
+    <meta name="template-color" content="#0E0E0E">
+    <meta name="description" content="{% block description %}GenZ - Personal Blog{% endblock %}">
+    <meta name="keywords" content="{% block keywords %}blog, personal, tech{% endblock %}">
+    <meta name="author" content="{% block author %}{% endblock %}">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets/imgs/template/favicon.svg' %}">
+    <link href="{% static 'assets/css/style.css' %}?v=2.0" rel="stylesheet">
+    <title>{% block title %}GenZ - Personal Blog HTML Template{% endblock %}</title>
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- Preloader -->
+    <div id="preloader-active">
+        <div class="preloader d-flex align-items-center justify-content-center">
+            <div class="preloader-inner position-relative">
+                <div class="text-center">
+                    <img class="mb-10" src="{% static 'assets/imgs/template/favicon.svg' %}" alt="GenZ">
+                    <div class="preloader-dots"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header sticky-bar bg-gray-900">
+        <div class="container">
+            <div class="main-header">
+                <div class="header-logo">
+                    <a class="d-flex" href="{% url 'pages:home' %}">
+                        <img class="logo-night" alt="GenZ" src="{% static 'assets/imgs/template/logo.svg' %}">
+                        <img class="d-none logo-day" alt="GenZ" src="{% static 'assets/imgs/template/logo-day.svg' %}">
+                    </a>
+                </div>
+                <div class="header-nav">
+                    <nav class="nav-main-menu d-none d-xl-block">
+                        <ul class="main-menu">
+                            <li class="has-children">
+                                <a class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}" href="{% url 'pages:home' %}">Home</a>
+                            </li>
+                            <li class="has-children">
+                                <a class="color-gray-500" href="#">About Me</a>
+                                <ul class="sub-menu">
+                                    <li><a class="color-gray-500" href="#">My Portfolio</a></li>
+                                    <li><a class="color-gray-500" href="#">Portfolio Details</a></li>
+                                </ul>
+                            </li>
+                            <li class="has-children">
+                                <a class="color-gray-500" href="#">Category</a>
+                                <ul class="sub-menu two-col">
+                                    <li><a class="color-gray-500" href="#">Blog Category 1</a></li>
+                                </ul>
+                            </li>
+                            <li class="has-children">
+                                <a class="color-gray-500" href="#">Pages</a>
+                                <ul class="sub-menu two-col">
+                                    <li><a class="color-gray-500" href="#">Contact</a></li>
+                                    <li><a class="color-gray-500" href="#">Login</a></li>
+                                    <li><a class="color-gray-500" href="#">Signup</a></li>
+                                    <li><a class="color-gray-500" href="#">Page 404</a></li>
+                                </ul>
+                            </li>
+                            <li><a class="color-gray-500" href="#">Contact</a></li>
+                        </ul>
+                    </nav>
+                    <div class="burger-icon burger-icon-white">
+                        <span class="burger-icon-top"></span>
+                        <span class="burger-icon-mid"></span>
+                        <span class="burger-icon-bottom"></span>
+                    </div>
+                </div>
+                <div class="header-right text-end">
+                    <a class="btn btn-search" href="#"></a>
+                    <div class="form-search p-20">
+                        <form action="#">
+                            <input class="form-control" type="text" placeholder="Search">
+                            <input class="btn-search-2" type="submit" value="">
+                        </form>
+                        <div class="popular-keywords text-start mt-20">
+                            <p class="mb-10 color-white">Popular tags:</p>
+                            <a class="color-gray-600 mr-10 font-xs" href="#"># Travel,</a>
+                            <a class="color-gray-600 mr-10 font-xs" href="#"># Tech,</a>
+                            <a class="color-gray-600 mr-10 font-xs" href="#"># Movie</a>
+                            <a class="color-gray-600 mr-10 font-xs" href="#"># Lifestyle</a>
+                            <a class="color-gray-600 mr-10 font-xs" href="#"># Sport</a>
+                        </div>
+                    </div>
+                    <div class="switch-button">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" id="flexSwitchCheckChecked" type="checkbox" role="switch" checked="">
+                        </div>
+                    </div>
+                    <a class="btn btn-linear d-none d-sm-inline-block hover-up hover-shadow" href="#">Subscribe</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Header -->
+    <div class="mobile-header-active mobile-header-wrapper-style perfect-scrollbar bg-gray-900">
+        <div class="mobile-header-wrapper-inner">
+            <div class="mobile-header-content-area">
+                <div class="mobile-logo border-gray-800">
+                    <a class="d-flex" href="{% url 'pages:home' %}">
+                        <img class="logo-night" alt="GenZ" src="{% static 'assets/imgs/template/logo.svg' %}">
+                        <img class="d-none logo-day" alt="GenZ" src="{% static 'assets/imgs/template/logo-day.svg' %}">
+                    </a>
+                </div>
+                <div class="perfect-scroll">
+                    <div class="mobile-menu-wrap mobile-header-border">
+                        <nav class="mt-15">
+                            <ul class="mobile-menu font-heading">
+                                <li class="has-children">
+                                    <a href="{% url 'pages:home' %}">Home</a>
+                                </li>
+                                <li class="has-children">
+                                    <a href="#">Category</a>
+                                    <ul class="sub-menu">
+                                        <li><a href="#">Blog Category 1</a></li>
+                                    </ul>
+                                </li>
+                                <li class="has-children">
+                                    <a href="#">Pages</a>
+                                    <ul class="sub-menu">
+                                        <li><a href="#">Contact</a></li>
+                                        <li><a href="#">Login</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <div class="mobile-header-bottom mobile-header-border">
+                <div class="mobile-header-button">
+                    <a class="btn btn-linear d-block" href="#">Subscribe</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    {% block content %}{% endblock %}
+
+    <!-- Footer -->
+    <footer class="footer-area bg-gray-900 footer-padding-top">
+        <div class="container">
+            <div class="footer-top">
+                <div class="row">
+                    <div class="col-xl-3 col-lg-4">
+                        <div class="footer-widget footer-about">
+                            <div class="footer-logo"><a class="d-flex" href="{% url 'pages:home' %}">
+                                <img class="logo-night" alt="GenZ" src="{% static 'assets/imgs/template/logo.svg' %}">
+                                <img class="d-none logo-day" alt="GenZ" src="{% static 'assets/imgs/template/logo-day.svg' %}">
+                            </a></div>
+                            <p class="text-sm color-gray-500 mt-20">This is my personal blog template where I share all my thoughts, experiences, and insights about various topics.</p>
+                        </div>
+                    </div>
+                    <div class="col-xl-2 col-lg-3 col-md-6">
+                        <div class="footer-widget">
+                            <h4 class="color-white mb-20">Navigation</h4>
+                            <ul class="list-menu">
+                                <li><a class="color-gray-600 hover-up" href="{% url 'pages:home' %}">Home</a></li>
+                                <li><a class="color-gray-600 hover-up" href="#">About</a></li>
+                                <li><a class="color-gray-600 hover-up" href="#">Portfolio</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xl-2 col-lg-3 col-md-6">
+                        <div class="footer-widget">
+                            <h4 class="color-white mb-20">Categories</h4>
+                            <ul class="list-menu">
+                                <li><a class="color-gray-600 hover-up" href="#">Travel</a></li>
+                                <li><a class="color-gray-600 hover-up" href="#">Technology</a></li>
+                                <li><a class="color-gray-600 hover-up" href="#">Lifestyle</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-3">
+                        <div class="footer-widget">
+                            <h4 class="color-white mb-20">Subscribe</h4>
+                            <p class="text-sm color-gray-500">Subscribe to get updates on the latest posts</p>
+                            <div class="mt-15">
+                                <form>
+                                    <div class="form-group">
+                                        <input class="form-control" type="email" placeholder="Your email address">
+                                        <button class="btn btn-primary mt-10" type="submit">
+                                            Subscribe
+                                            <i class="fi-rr-arrow-small-right"></i>
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom border-gray-800">
+                <div class="row">
+                    <div class="col-lg-5 text-center text-lg-start">
+                        <p class="text-base color-white">© Created by <a class="copyright" href="#" target="_blank">Your Name</a></p>
+                    </div>
+                    <div class="col-lg-7 text-center text-lg-end">
+                        <div class="box-socials">
+                            <div class="d-inline-block mr-30">
+                                <a class="icon-socials icon-twitter color-gray-500" href="https://twitter.com" target="_blank">Twitter</a>
+                            </div>
+                            <div class="d-inline-block mr-30">
+                                <a class="icon-socials icon-linked color-gray-500" href="https://www.linkedin.com" target="_blank">LinkedIn</a>
+                            </div>
+                            <div class="d-inline-block">
+                                <a class="icon-socials icon-insta color-gray-500" href="https://www.instagram.com" target="_blank">Instagram</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <div class="progressCounter progressScroll hover-up hover-neon-2">
+        <div class="progressScroll-border">
+            <div class="progressScroll-circle">
+                <span class="progressScroll-text"><i class="fi-rr-arrow-small-up"></i></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="{% static 'assets/js/vendors/modernizr-3.6.0.min.js' %}"></script>
+    <script src="{% static 'assets/js/vendors/jquery-3.6.0.min.js' %}"></script>
+    <script src="{% static 'assets/js/vendors/jquery-migrate-3.3.0.min.js' %}"></script>
+    <script src="{% static 'assets/js/vendors/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'assets/js/vendors/waypoints.js' %}"></script>
+    <script src="{% static 'assets/js/vendors/wow.js' %}"></script>
+    <script src="{% static 'assets/js/vendors/text-type.js' %}"></script>
+    <script src="{% static 'assets/js/vendors/swiper-bundle.min.js' %}"></script>
+    <script src="{% static 'assets/js/vendors/jquery.progressScroll.min.js' %}"></script>
+    <script src="{% static 'assets/js/main.js' %}?v=2.0"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
+
