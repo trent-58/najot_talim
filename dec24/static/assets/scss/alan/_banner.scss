@@ -1,0 +1,123 @@
+/*
+-----------------------------------------------------------------------
+    Home Slider CSS
+-----------------------------------------------------------------------
+*/
+
+.home-slider-area {
+  &.slider-default {
+    position: relative;
+    .home-slider-content {
+      .swiper-container {
+        .swiper-wrapper {
+          .swiper-slide {
+            &-active {
+              .slider-content-area {
+                .content {
+                  .tittle-wrp {
+                    h2 {
+                      -webkit-animation-delay: 1.0s;
+                      animation-delay: 1.0s;
+                      -webkit-animation-name: fadeInUP;
+                      animation-name: fadeInUp;
+                    }
+                  }
+                  .btn-wrp {
+                    -webkit-animation-delay: 1.6s;
+                    animation-delay: 1.6s;
+                    -webkit-animation-name: fadeInLeft;
+                    animation-name: fadeInLeft;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      .home-slider-item {
+        background-position: center center;
+        height: 860px;
+        @media #{$lg-device} {
+          height: 666px;
+        }
+        @media #{$md-device} {
+          height: 590px;
+        }
+        @media #{$sm-device} {
+          height: 500px;
+        }
+        @media #{$xs-device} {
+          height: 478px;
+        }
+      }
+    }
+    .slider-content-area {
+      align-items: center;
+      display: flex;
+      height: 100%;
+      position: relative;
+      .content {
+        border: 20px solid rgba($white, .5);
+        max-width: 700px;
+        text-align: center;
+        @media #{$xs-device} {
+          border-width: 10px;
+          max-width: 400px;
+        }
+        .inner-content {
+          background-color: rgba($white, .5);
+          margin: 20px;
+          padding: 29px;
+          position: relative;
+          overflow: hidden;
+          @media #{$xs-device} {
+            margin: 10px;
+            padding: 10px;
+          }
+        }
+        .tittle-wrp {
+          margin-bottom: 22px;
+          h2 {
+            color: $black;
+            font-size: 60px;
+            line-height: 1.2;
+            -webkit-animation-duration: 1.3s;
+            animation-duration: 1.3s;
+            -webkit-animation-fill-mode: both;
+            animation-fill-mode: both;
+            @media #{$lg-device} {
+              font-size: 50px;
+            }
+            @media #{$md-device} {
+              font-size: 44px;
+            }
+            @media #{$sm-device} {
+              font-size: 40px;
+            }
+            @media #{$xxs-device} {
+              font-size: 30px;
+            }
+          }
+        }
+        .btn-wrp {
+          -webkit-animation-duration: 1.3s;
+          animation-duration: 1.3s;
+          -webkit-animation-fill-mode: both;
+          animation-fill-mode: both;
+          .btn-link {
+            border-bottom: 1px solid $black;
+            color: $black;
+            font-size: 17px;
+            font-weight: 700;
+            line-height: 1;
+            &:hover {
+              color: $theme-color;
+              border-color: $theme-color;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+

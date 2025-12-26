@@ -1,0 +1,1070 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+  <main class="main-content site-wrapper-reveal">
+    <!--== Start Page Title Area ==-->
+    <section class="page-title-area" data-bg-img="assets/img/photos/bg-page-title.webp">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="page-title-content text-center">
+              <h2 class="title text-white">Products</h2>
+              <div class="bread-crumbs"><a href="index.html">Home<span class="breadcrumb-sep">/</span></a><span class="active">Products</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--== End Page Title Area ==-->
+
+    <!--== Start Shop Area Wrapper ==-->
+    <section class="product-area product-grid-area">
+      <div class="container">
+        <div class="row flex-row-reverse">
+          <div class="col-lg-9">
+            <div class="row">
+              <div class="col-12">
+                <div class="shop-topbar-wrapper">
+                  <div class="collection-shorting">
+                    <div class="shop-topbar-left">
+                      <div class="view-mode">
+                        <nav>
+                          <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <button class="nav-link active" id="nav-grid-tab" data-bs-toggle="tab" data-bs-target="#nav-grid" type="button" role="tab" aria-controls="nav-grid" aria-selected="true"><i class="fa fa-th"></i></button>
+                            <button class="nav-link" id="nav-list-tab" data-bs-toggle="tab" data-bs-target="#nav-list" type="button" role="tab" aria-controls="nav-list" aria-selected="false"><i class="fa fa-list-ul"></i></button>
+                          </div>
+                        </nav>
+                      </div>
+                      <p>Showing 1 - 15 of 33 result</p>
+                    </div>
+                    <div class="product-sorting-wrapper">
+                      <div class="product-show">
+                        <label for="SortBy">Sort by</label>
+                        <select class="form-select" id="SortBy" aria-label="Default select example">
+                          <option value="manual">Featured</option>
+                          <option value="best-selling">Best Selling</option>
+                          <option value="title-ascending" selected>Alphabetically, A-Z</option>
+                          <option value="title-descending">Alphabetically, Z-A</option>
+                          <option value="price-ascending">Price, low to high</option>
+                          <option value="price-descending">Price, high to low</option>
+                          <option value="created-descending">Date, new to old</option>
+                          <option value="created-ascending">Date, old to new</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-content" id="nav-tabContent">
+              <div class="tab-pane fade show active" id="nav-grid" role="tabpanel" aria-labelledby="nav-grid-tab">
+                <div class="row">
+                  <div class="col-md-6 col-xl-4">
+                    <!-- Start Product Item -->
+                    <div class="product-item">
+                      <div class="product-thumb">
+                        <a href="shop_single_product.html">
+                          <img src="assets/img/shop/1.png" alt="Alan-Shop">
+                          <div class="ribbons">
+                            <span class="ribbon ribbon-hot">Sale</span>
+                            <span class="ribbon ribbon-onsale align-right">-15%</span>
+                          </div>
+                        </a>
+                        <div class="product-action">
+                          <a class="action-wishlist" href="shop-wishlist.html" title="Wishlist">
+                            <i class="ion-android-favorite-outline"></i>
+                          </a>
+                          <a class="action-quick-view" href="javascript:void(0);" title="Quick View">
+                            <i class="ion-ios-search-strong"></i>
+                          </a>
+                          <a class="action-cart" href="#/">
+                            <i class="fa fa-opencart"></i>
+                          </a>
+                        </div>
+                      </div>
+                      <div class="product-info">
+                        <h4 class="title"><a href="shop_single_product.html">1. New and sale badge pro...</a></h4>
+                        <div class="prices">
+                          <span class="price">$110.00</span>
+                          <del class="price-old">$130.00</del>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End Product Item -->
+                  </div>
+                  <div class="col-md-6 col-xl-4">
+                    <!-- Start Product Item -->
+                    <div class="product-item">
+                      <div class="product-thumb">
+                        <a href="shop_single_product.html">
+                          <img src="assets/img/shop/12.png" alt="Alan-Shop">
+                          <div class="ribbons">
+                            <span class="ribbon ribbon-hot">Sale</span>
+                            <span class="ribbon ribbon-onsale align-right">-10%</span>
+                          </div>
+                        </a>
+                        <div class="product-action">
+                          <a class="action-wishlist" href="shop-wishlist.html" title="Wishlist">
+                            <i class="ion-android-favorite-outline"></i>
+                          </a>
+                          <a class="action-quick-view" href="javascript:void(0);" title="Quick View">
+                            <i class="ion-ios-search-strong"></i>
+                          </a>
+                          <a class="action-cart" href="#/">
+                            <i class="fa fa-opencart"></i>
+                          </a>
+                        </div>
+                      </div>
+                      <div class="product-info">
+                        <h4 class="title"><a href="shop_single_product.html">10. This is the large tit...</a></h4>
+                        <div class="prices">
+                          <span class="price">$19.00</span>
+                          <del class="price-old">$21.00</del>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End Product Item -->
+                  </div>
+                  <div class="col-md-6 col-xl-4">
+                    <!-- Start Product Item -->
+                    <div class="product-item">
+                      <div class="product-thumb">
+                        <a href="shop_single_product.html">
+                          <img src="assets/img/shop/3.png" alt="Alan-Shop">
+                        </a>
+                        <div class="product-action">
+                          <a class="action-wishlist" href="shop-wishlist.html" title="Wishlist">
+                            <i class="ion-android-favorite-outline"></i>
+                          </a>
+                          <a class="action-quick-view" href="javascript:void(0);" title="Quick View">
+                            <i class="ion-ios-search-strong"></i>
+                          </a>
+                          <a class="action-cart" href="#/">
+                            <i class="fa fa-opencart"></i>
+                          </a>
+                        </div>
+                      </div>
+                      <div class="product-info">
+                        <h4 class="title"><a href="shop_single_product.html">11. Product with video</a></h4>
+                        <div class="prices">
+                          <span class="price">$39.00</span>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End Product Item -->
+                  </div>
+                  <div class="col-md-6 col-xl-4">
+                    <!-- Start Product Item -->
+                    <div class="product-item">
+                      <div class="product-thumb">
+                        <a href="shop_single_product.html">
+                          <img src="assets/img/shop/2.webp" alt="Alan-Shop">
+                        </a>
+                        <div class="product-action">
+                          <a class="action-wishlist" href="shop-wishlist.html" title="Wishlist">
+                            <i class="ion-android-favorite-outline"></i>
+                          </a>
+                          <a class="action-quick-view" href="javascript:void(0);" title="Quick View">
+                            <i class="ion-ios-search-strong"></i>
+                          </a>
+                          <a class="action-cart" href="#/">
+                            <i class="fa fa-opencart"></i>
+                          </a>
+                        </div>
+                      </div>
+                      <div class="product-info">
+                        <h4 class="title"><a href="shop_single_product.html">2. New badge product</a></h4>
+                        <div class="prices">
+                          <span class="price">$80.00</span>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End Product Item -->
+                  </div>
+                  <div class="col-md-6 col-xl-4">
+                    <!-- Start Product Item -->
+                    <div class="product-item">
+                      <div class="product-thumb">
+                        <a href="shop_single_product.html">
+                          <img src="assets/img/shop/4.webp" alt="Alan-Shop">
+                          <div class="ribbons">
+                            <span class="ribbon ribbon-hot">Sale</span>
+                            <span class="ribbon ribbon-onsale align-right">-18%</span>
+                          </div>
+                        </a>
+                        <div class="product-action">
+                          <a class="action-wishlist" href="shop-wishlist.html" title="Wishlist">
+                            <i class="ion-android-favorite-outline"></i>
+                          </a>
+                          <a class="action-quick-view" href="javascript:void(0);" title="Quick View">
+                            <i class="ion-ios-search-strong"></i>
+                          </a>
+                          <a class="action-cart" href="#/">
+                            <i class="fa fa-opencart"></i>
+                          </a>
+                        </div>
+                      </div>
+                      <div class="product-info">
+                        <h4 class="title"><a href="shop_single_product.html">3. Variable product</a></h4>
+                        <div class="prices">
+                          <span class="price">$70.00</span>
+                          <del class="price-old">$85.00</del>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End Product Item -->
+                  </div>
+                  <div class="col-md-6 col-xl-4">
+                    <!-- Start Product Item -->
+                    <div class="product-item">
+                      <div class="product-thumb">
+                        <a href="shop_single_product.html">
+                          <img src="assets/img/shop/5.png" alt="Alan-Shop">
+                          <div class="ribbons">
+                            <span class="ribbon-soldout">Soldout</span>
+                          </div>
+                        </a>
+                        <div class="product-action">
+                          <a class="action-wishlist" href="#/" title="Wishlist">
+                            <i class="ion-android-favorite-outline"></i>
+                          </a>
+                          <a class="action-quick-view" href="javascript:void(0);" title="Quick View">
+                            <i class="ion-ios-search-strong"></i>
+                          </a>
+                          <a class="action-cart" href="#/">
+                            <i class="fa fa-opencart"></i>
+                          </a>
+                        </div>
+                      </div>
+                      <div class="product-info">
+                        <h4 class="title"><a href="shop_single_product.html">4. Soldout product</a></h4>
+                        <div class="prices">
+                          <span class="price">$19.00</span>
+                          <del class="price-old">$29.00</del>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End Product Item -->
+                  </div>
+                  <div class="col-md-6 col-xl-4">
+                    <!-- Start Product Item -->
+                    <div class="product-item">
+                      <div class="product-thumb">
+                        <a href="shop_single_product.html">
+                          <img src="assets/img/shop/20.png" alt="Alan-Shop">
+                        </a>
+                        <div class="product-action">
+                          <a class="action-wishlist" href="shop-wishlist.html" title="Wishlist">
+                            <i class="ion-android-favorite-outline"></i>
+                          </a>
+                          <a class="action-quick-view" href="javascript:void(0);" title="Quick View">
+                            <i class="ion-ios-search-strong"></i>
+                          </a>
+                          <a class="action-cart" href="#/">
+                            <i class="fa fa-opencart"></i>
+                          </a>
+                        </div>
+                      </div>
+                      <div class="product-info">
+                        <h4 class="title"><a href="shop_single_product.html">5. Simple product</a></h4>
+                        <div class="prices">
+                          <span class="price">$50.00</span>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End Product Item -->
+                  </div>
+                  <div class="col-md-6 col-xl-4">
+                    <!-- Start Product Item -->
+                    <div class="product-item">
+                      <div class="product-thumb">
+                        <a href="shop_single_product.html">
+                          <img src="assets/img/shop/21.png" alt="Alan-Shop">
+                          <div class="ribbons">
+                            <span class="ribbon ribbon-hot">Sale</span>
+                            <span class="ribbon ribbon-onsale align-right">-27%</span>
+                          </div>
+                        </a>
+                        <div class="product-action">
+                          <a class="action-wishlist" href="shop-wishlist.html" title="Wishlist">
+                            <i class="ion-android-favorite-outline"></i>
+                          </a>
+                          <a class="action-quick-view" href="javascript:void(0);" title="Quick View">
+                            <i class="ion-ios-search-strong"></i>
+                          </a>
+                          <a class="action-cart" href="#/">
+                            <i class="fa fa-opencart"></i>
+                          </a>
+                        </div>
+                      </div>
+                      <div class="product-info">
+                        <h4 class="title"><a href="shop_single_product.html">6. Variable with soldout ...</a></h4>
+                        <div class="prices">
+                          <span class="price">$55.00</span>
+                          <del class="price-old">$75.00</del>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End Product Item -->
+                  </div>
+                  <div class="col-md-6 col-xl-4">
+                    <!-- Start Product Item -->
+                    <div class="product-item">
+                      <div class="product-thumb">
+                        <a href="shop_single_product.html">
+                          <img src="assets/img/shop/19.png" alt="Alan-Shop">
+                        </a>
+                        <div class="product-action">
+                          <a class="action-wishlist" href="shop-wishlist.html" title="Wishlist">
+                            <i class="ion-android-favorite-outline"></i>
+                          </a>
+                          <a class="action-quick-view" href="javascript:void(0);" title="Quick View">
+                            <i class="ion-ios-search-strong"></i>
+                          </a>
+                          <a class="action-cart" href="#/">
+                            <i class="fa fa-opencart"></i>
+                          </a>
+                        </div>
+                      </div>
+                      <div class="product-info">
+                        <h4 class="title"><a href="shop_single_product.html">7. Sample affiliate product</a></h4>
+                        <div class="prices">
+                          <span class="price">$29.00</span>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End Product Item -->
+                  </div>
+                  <div class="col-md-6 col-xl-4">
+                    <!-- Start Product Item -->
+                    <div class="product-item">
+                      <div class="product-thumb">
+                        <a href="shop_single_product.html">
+                          <img src="assets/img/shop/6.png" alt="Alan-Shop">                  
+                          <span class="ribbon ribbon-hot">Sale</span>
+                          <span class="ribbon ribbon-onsale align-right">-35%</span>
+                        </a>
+                        <div class="product-action">
+                          <a class="action-wishlist" href="shop-wishlist.html" title="Wishlist">
+                            <i class="ion-android-favorite-outline"></i>
+                          </a>
+                          <a class="action-quick-view" href="javascript:void(0);" title="Quick View">
+                            <i class="ion-ios-search-strong"></i>
+                          </a>
+                          <a class="action-cart" href="#/">
+                            <i class="fa fa-opencart"></i>
+                          </a>
+                        </div>
+                        <div class="countdown-content">
+                          <ul class="countdown-timer">
+                            <li><span class="days">00</span><p class="days_text">Days</p></li>
+                            <li><span class="hours">00</span><p class="hours_text">Hour</p></li>
+                            <li><span class="minutes">00</span><p class="minutes_text">Mint</p></li>
+                            <li><span class="seconds">00</span><p class="seconds_text">Sec</p></li>
+                          </ul>
+                        </div>
+                      </div>
+                      <div class="product-info">
+                        <h4 class="title"><a href="shop_single_product.html">8. Countdown product</a></h4>
+                        <div class="prices">
+                          <span class="price">$39.00</span>
+                          <del class="price-old">$60.00</del>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End Product Item -->
+                  </div>
+                  <div class="col-md-6 col-xl-4">
+                    <!-- Start Product Item -->
+                    <div class="product-item">
+                      <div class="product-thumb">
+                        <a href="shop_single_product.html">
+                          <img src="assets/img/shop/7.png" alt="Alan-Shop">
+                        </a>
+                        <div class="product-action">
+                          <a class="action-wishlist" href="shop-wishlist.html" title="Wishlist">
+                            <i class="ion-android-favorite-outline"></i>
+                          </a>
+                          <a class="action-quick-view" href="javascript:void(0);" title="Quick View">
+                            <i class="ion-ios-search-strong"></i>
+                          </a>
+                          <a class="action-cart" href="#/">
+                            <i class="fa fa-opencart"></i>
+                          </a>
+                        </div>
+                      </div>
+                      <div class="product-info">
+                        <h4 class="title"><a href="shop_single_product.html">9. Without shortcode product</a></h4>
+                        <div class="prices">
+                          <span class="price">$79.00</span>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End Product Item -->
+                  </div>
+                  <div class="col-md-6 col-xl-4">
+                    <!-- Start Product Item -->
+                    <div class="product-item">
+                      <div class="product-thumb">
+                        <a href="shop_single_product.html">
+                          <img src="assets/img/shop/11.png" alt="Alan-Shop">
+                        </a>
+                        <div class="product-action">
+                          <a class="action-wishlist" href="shop-wishlist.html" title="Wishlist">
+                            <i class="ion-android-favorite-outline"></i>
+                          </a>
+                          <a class="action-quick-view" href="javascript:void(0);" title="Quick View">
+                            <i class="ion-ios-search-strong"></i>
+                          </a>
+                          <a class="action-cart" href="#/">
+                            <i class="fa fa-opencart"></i>
+                          </a>
+                        </div>
+                      </div>
+                      <div class="product-info">
+                        <h4 class="title"><a href="shop_single_product.html">Demo product title</a></h4>
+                        <div class="prices">
+                          <span class="price">$29.00</span>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End Product Item -->
+                  </div>
+                  <div class="col-md-6 col-xl-4">
+                    <!-- Start Product Item -->
+                    <div class="product-item">
+                      <div class="product-thumb">
+                        <a href="shop_single_product.html">
+                          <img src="assets/img/shop/10.png" alt="Alan-Shop">
+                        </a>
+                        <div class="product-action">
+                          <a class="action-wishlist" href="shop-wishlist.html" title="Wishlist">
+                            <i class="ion-android-favorite-outline"></i>
+                          </a>
+                          <a class="action-quick-view" href="javascript:void(0);" title="Quick View">
+                            <i class="ion-ios-search-strong"></i>
+                          </a>
+                          <a class="action-cart" href="#/">
+                            <i class="fa fa-opencart"></i>
+                          </a>
+                        </div>
+                      </div>
+                      <div class="product-info">
+                        <h4 class="title"><a href="shop_single_product.html">Demo product title</a></h4>
+                        <div class="prices">
+                          <span class="price">$64.43</span>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End Product Item -->
+                  </div>
+                  <div class="col-md-6 col-xl-4">
+                    <!-- Start Product Item -->
+                    <div class="product-item">
+                      <div class="product-thumb">
+                        <a href="shop_single_product.html">
+                          <img src="assets/img/shop/8.png" alt="Alan-Shop">
+                        </a>
+                        <div class="product-action">
+                          <a class="action-wishlist" href="shop-wishlist.html" title="Wishlist">
+                            <i class="ion-android-favorite-outline"></i>
+                          </a>
+                          <a class="action-quick-view" href="javascript:void(0);" title="Quick View">
+                            <i class="ion-ios-search-strong"></i>
+                          </a>
+                          <a class="action-cart" href="#/">
+                            <i class="fa fa-opencart"></i>
+                          </a>
+                        </div>
+                      </div>
+                      <div class="product-info">
+                        <h4 class="title"><a href="shop_single_product.html">Demo product title</a></h4>
+                        <div class="prices">
+                          <span class="price">$103.10</span>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End Product Item -->
+                  </div>
+                  <div class="col-md-6 col-xl-4">
+                    <!-- Start Product Item -->
+                    <div class="product-item">
+                      <div class="product-thumb">
+                        <a href="shop_single_product.html">
+                          <img src="assets/img/shop/21.png" alt="Alan-Shop">
+                          <div class="ribbons">
+                            <span class="ribbon ribbon-hot">Sale</span>
+                            <span class="ribbon ribbon-onsale align-right">-10%</span>
+                          </div>
+                        </a>
+                        <div class="product-action">
+                          <a class="action-wishlist" href="shop-wishlist.html" title="Wishlist">
+                            <i class="ion-android-favorite-outline"></i>
+                          </a>
+                          <a class="action-quick-view" href="javascript:void(0);" title="Quick View">
+                            <i class="ion-ios-search-strong"></i>
+                          </a>
+                          <a class="action-cart" href="#/">
+                            <i class="fa fa-opencart"></i>
+                          </a>
+                        </div>
+                      </div>
+                      <div class="product-info">
+                        <h4 class="title"><a href="shop_single_product.html">Demo product title</a></h4>
+                        <div class="prices">
+                          <span class="price">$24.49</span>
+                          <del class="price-old">$27.06</del>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End Product Item -->
+                  </div>
+                </div>
+              </div>
+              <div class="tab-pane fade" id="nav-list" role="tabpanel" aria-labelledby="nav-list-tab">
+                <div class="row">
+                  <div class="col-12">
+                    <!-- Start Product Item -->
+                    <div class="product-item product-item-list">
+                      <div class="product-thumb">
+                        <a href="shop_single_product.html">
+                          <img src="assets/img/shop/1.png" alt="Alan-Shop">
+                          <div class="ribbons">
+                            <span class="ribbon ribbon-hot">Sale</span>
+                            <span class="ribbon ribbon-onsale align-right">-15%</span>
+                          </div>
+                        </a>
+                      </div>
+                      <div class="product-info">
+                        <h4 class="title"><a href="shop_single_product.html">1. New and sale badge product</a></h4>
+                        <div class="prices">
+                          <span class="price">$141.76</span>
+                          <del class="price-old">$167.53</del>
+                        </div>
+                        <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia,</p>
+                        <div class="product-action">
+                          <a class="action-wishlist" href="shop-wishlist.html" title="Wishlist">
+                            <i class="ion-android-favorite-outline"></i>
+                          </a>
+                          <a class="action-quick-view" href="javascript:void(0);" title="Quick View">
+                            <i class="ion-ios-search-strong"></i>
+                          </a>
+                          <a class="action-cart" href="#/">
+                            <i class="fa fa-opencart"></i>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End Product Item -->
+                  </div>
+                  <div class="col-12">
+                    <!-- Start Product Item -->
+                    <div class="product-item product-item-list">
+                      <div class="product-thumb">
+                        <a href="shop_single_product.html">
+                          <img src="assets/img/shop/12.png" alt="Alan-Shop">
+                          <div class="ribbons">
+                            <span class="ribbon ribbon-hot">Sale</span>
+                            <span class="ribbon ribbon-onsale align-right">-10%</span>
+                          </div>
+                        </a>
+                      </div>
+                      <div class="product-info">
+                        <h4 class="title"><a href="shop_single_product.html">10. This is the large title for testing large title and there is an image for testing</a></h4>
+                        <div class="prices">
+                          <span class="price">$24.49</span>
+                          <del class="price-old">$27.06</del>
+                        </div>
+                        <p>A long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of...</p>
+                        <div class="product-action">
+                          <a class="action-wishlist" href="shop-wishlist.html" title="Wishlist">
+                            <i class="ion-android-favorite-outline"></i>
+                          </a>
+                          <a class="action-quick-view" href="javascript:void(0);" title="Quick View">
+                            <i class="ion-ios-search-strong"></i>
+                          </a>
+                          <a class="action-cart" href="#/">
+                            <i class="fa fa-opencart"></i>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End Product Item -->
+                  </div>
+                  <div class="col-12">
+                    <!-- Start Product Item -->
+                    <div class="product-item product-item-list">
+                      <div class="product-thumb">
+                        <a href="shop_single_product.html">
+                          <img src="assets/img/shop/3.png" alt="Alan-Shop">
+                        </a>
+                      </div>
+                      <div class="product-info">
+                        <h4 class="title"><a href="shop_single_product.html">11. Product with video</a></h4>
+                        <div class="prices">
+                          <span class="price">$39.00</span>
+                        </div>
+                        <p>As opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem...</p>
+                        <div class="product-action">
+                          <a class="action-wishlist" href="shop-wishlist.html" title="Wishlist">
+                            <i class="ion-android-favorite-outline"></i>
+                          </a>
+                          <a class="action-quick-view" href="javascript:void(0);" title="Quick View">
+                            <i class="ion-ios-search-strong"></i>
+                          </a>
+                          <a class="action-cart" href="#/">
+                            <i class="fa fa-opencart"></i>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End Product Item -->
+                  </div>
+                  <div class="col-12">
+                    <!-- Start Product Item -->
+                    <div class="product-item product-item-list">
+                      <div class="product-thumb">
+                        <a href="shop_single_product.html">
+                          <img src="assets/img/shop/2.webp" alt="Alan-Shop">
+                        </a>
+                      </div>
+                      <div class="product-info">
+                        <h4 class="title"><a href="shop_single_product.html">2. New badge product</a></h4>
+                        <div class="prices">
+                          <span class="price">$103.10</span>
+                        </div>
+                        <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.</p>
+                        <div class="product-action">
+                          <a class="action-wishlist" href="shop-wishlist.html" title="Wishlist">
+                            <i class="ion-android-favorite-outline"></i>
+                          </a>
+                          <a class="action-quick-view" href="javascript:void(0);" title="Quick View">
+                            <i class="ion-ios-search-strong"></i>
+                          </a>
+                          <a class="action-cart" href="#/">
+                            <i class="fa fa-opencart"></i>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End Product Item -->
+                  </div>
+                  <div class="col-12">
+                    <!-- Start Product Item -->
+                    <div class="product-item product-item-list">
+                      <div class="product-thumb">
+                        <a href="shop_single_product.html">
+                          <img src="assets/img/shop/4.webp" alt="Alan-Shop">
+                          <div class="ribbons">
+                            <span class="ribbon ribbon-hot">Sale</span>
+                            <span class="ribbon ribbon-onsale align-right">-18%</span>
+                          </div>
+                        </a>
+                      </div>
+                      <div class="product-info">
+                        <h4 class="title"><a href="shop_single_product.html">3. Variable product</a></h4>
+                        <div class="prices">
+                          <span class="price">$51.55</span>
+                          <del class="price-old">$109.54</del>
+                        </div>
+                        <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.</p>
+                        <div class="product-action">
+                          <a class="action-wishlist" href="shop-wishlist.html" title="Wishlist">
+                            <i class="ion-android-favorite-outline"></i>
+                          </a>
+                          <a class="action-quick-view" href="javascript:void(0);" title="Quick View">
+                            <i class="ion-ios-search-strong"></i>
+                          </a>
+                          <a class="action-cart" href="#/">
+                            <i class="fa fa-opencart"></i>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End Product Item -->
+                  </div>
+                  <div class="col-12">
+                    <!-- Start Product Item -->
+                    <div class="product-item product-item-list">
+                      <div class="product-thumb">
+                        <a href="shop_single_product.html">
+                          <img src="assets/img/shop/5.png" alt="Alan-Shop">
+                          <div class="ribbons">
+                            <span class="ribbon-soldout">Soldout</span>
+                          </div>
+                        </a>
+                      </div>
+                      <div class="product-info">
+                        <h4 class="title"><a href="shop_single_product.html">4. Soldout productt</a></h4>
+                        <div class="prices">
+                          <span class="price">$24.49</span>
+                          <del class="price-old">$37.37</del>
+                        </div>
+                        <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.</p>
+                        <div class="product-action">
+                          <a class="action-wishlist" href="#/" title="Wishlist">
+                            <i class="ion-android-favorite-outline"></i>
+                          </a>
+                          <a class="action-quick-view" href="javascript:void(0);" title="Quick View">
+                            <i class="ion-ios-search-strong"></i>
+                          </a>
+                          <a class="action-cart" href="#/">
+                            <i class="fa fa-opencart"></i>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End Product Item -->
+                  </div>
+                  <div class="col-12">
+                    <!-- Start Product Item -->
+                    <div class="product-item product-item-list">
+                      <div class="product-thumb">
+                        <a href="shop_single_product.html">
+                          <img src="assets/img/shop/20.png" alt="Alan-Shop">
+                        </a>
+                      </div>
+                      <div class="product-info">
+                        <h4 class="title"><a href="shop_single_product.html">5. Simple product</a></h4>
+                        <div class="prices">
+                          <span class="price">$64.43</span>
+                        </div>
+                        <p>On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee the pain and trouble that are bound to ensue; and equal blame belongs to those who fail in their duty through weakness of will</p>
+                        <div class="product-action">
+                          <a class="action-wishlist" href="shop-wishlist.html" title="Wishlist">
+                            <i class="ion-android-favorite-outline"></i>
+                          </a>
+                          <a class="action-quick-view" href="javascript:void(0);" title="Quick View">
+                            <i class="ion-ios-search-strong"></i>
+                          </a>
+                          <a class="action-cart" href="#/">
+                            <i class="fa fa-opencart"></i>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End Product Item -->
+                  </div>
+                  <div class="col-12">
+                    <!-- Start Product Item -->
+                    <div class="product-item product-item-list">
+                      <div class="product-thumb">
+                        <a href="shop_single_product.html">
+                          <img src="assets/img/shop/21.png" alt="Alan-Shop">
+                          <div class="ribbons">
+                            <span class="ribbon ribbon-hot">Sale</span>
+                            <span class="ribbon ribbon-onsale align-right">-27%</span>
+                          </div>
+                        </a>
+                      </div>
+                      <div class="product-info">
+                        <h4 class="title"><a href="shop_single_product.html">6. Variable with soldout product</a></h4>
+                        <div class="prices">
+                          <span class="price">$70.88</span>
+                          <del class="price-old">$96.65</del>
+                        </div>
+                        <p>Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur.</p>
+                        <div class="product-action">
+                          <a class="action-wishlist" href="shop-wishlist.html" title="Wishlist">
+                            <i class="ion-android-favorite-outline"></i>
+                          </a>
+                          <a class="action-quick-view" href="javascript:void(0);" title="Quick View">
+                            <i class="ion-ios-search-strong"></i>
+                          </a>
+                          <a class="action-cart" href="#/">
+                            <i class="fa fa-opencart"></i>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End Product Item -->
+                  </div>
+                  <div class="col-12">
+                    <!-- Start Product Item -->
+                    <div class="product-item product-item-list">
+                      <div class="product-thumb">
+                        <a href="shop_single_product.html">
+                          <img src="assets/img/shop/19.png" alt="Alan-Shop">
+                        </a>
+                      </div>
+                      <div class="product-info">
+                        <h4 class="title"><a href="shop_single_product.html">7. Sample affiliate product</a></h4>
+                        <div class="prices">
+                          <span class="price">$37.37</span>
+                        </div>
+                        <p>I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness.</p>
+                        <div class="product-action">
+                          <a class="action-wishlist" href="shop-wishlist.html" title="Wishlist">
+                            <i class="ion-android-favorite-outline"></i>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End Product Item -->
+                  </div>
+                  <div class="col-12">
+                    <!-- Start Product Item -->
+                    <div class="product-item product-item-list">
+                      <div class="product-thumb">
+                        <a href="shop_single_product.html">
+                          <img src="assets/img/shop/6.png" alt="Alan-Shop">                  
+                          <span class="ribbon ribbon-hot">Sale</span>
+                          <span class="ribbon ribbon-onsale align-right">-35%</span>
+                        </a>
+                      </div>
+                      <div class="product-info">
+                        <h4 class="title"><a href="shop_single_product.html">8. Countdown product</a></h4>
+                        <div class="prices">
+                          <span class="price">$50.26</span>
+                          <del class="price-old">$77.32</del>
+                        </div>
+                        <p>Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus.</p>
+                        <div class="product-action">
+                          <a class="action-wishlist" href="shop-wishlist.html" title="Wishlist">
+                            <i class="ion-android-favorite-outline"></i>
+                          </a>
+                          <a class="action-quick-view" href="javascript:void(0);" title="Quick View">
+                            <i class="ion-ios-search-strong"></i>
+                          </a>
+                          <a class="action-cart" href="#/">
+                            <i class="fa fa-opencart"></i>
+                          </a>
+                        </div>
+                        <div class="countdown-content">
+                          <ul class="countdown-timer">
+                            <li><span class="days">00</span><p class="days_text">Days</p></li>
+                            <li><span class="hours">00</span><p class="hours_text">Hour</p></li>
+                            <li><span class="minutes">00</span><p class="minutes_text">Mint</p></li>
+                            <li><span class="seconds">00</span><p class="seconds_text">Sec</p></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End Product Item -->
+                  </div>
+                  <div class="col-12">
+                    <!-- Start Product Item -->
+                    <div class="product-item product-item-list">
+                      <div class="product-thumb">
+                        <a href="shop_single_product.html">
+                          <img src="assets/img/shop/7.png" alt="Alan-Shop">
+                        </a>
+                      </div>
+                      <div class="product-info">
+                        <h4 class="title"><a href="shop_single_product.html">9. Without shortcode product</a></h4>
+                        <div class="prices">
+                          <span class="price">$101.81</span>
+                        </div>
+                        <p>we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so blinded by...</p>
+                        <div class="product-action">
+                          <a class="action-wishlist" href="shop-wishlist.html" title="Wishlist">
+                            <i class="ion-android-favorite-outline"></i>
+                          </a>
+                          <a class="action-quick-view" href="javascript:void(0);" title="Quick View">
+                            <i class="ion-ios-search-strong"></i>
+                          </a>
+                          <a class="action-cart" href="#/">
+                            <i class="fa fa-opencart"></i>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End Product Item -->
+                  </div>
+                  <div class="col-12">
+                    <!-- Start Product Item -->
+                    <div class="product-item product-item-list">
+                      <div class="product-thumb">
+                        <a href="shop_single_product.html">
+                          <img src="assets/img/shop/11.png" alt="Alan-Shop">
+                        </a>
+                      </div>
+                      <div class="product-info">
+                        <h4 class="title"><a href="shop_single_product.html">Demo product title</a></h4>
+                        <div class="prices">
+                          <span class="price">$37.37</span>
+                        </div>
+                        <p>I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness.</p>
+                        <div class="product-action">
+                          <a class="action-wishlist" href="shop-wishlist.html" title="Wishlist">
+                            <i class="ion-android-favorite-outline"></i>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End Product Item -->
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="pagination-area">
+              <nav>
+                <ul class="page-numbers">
+                  <li>
+                    <a class="page-number disabled next" href="blog.html">
+                      <i class="ion-ios-arrow-left"></i>
+                      Prev
+                    </a>
+                  </li>
+                  <li>
+                    <a class="page-number active" href="blog.html">1</a>
+                  </li>
+                  <li>
+                    <a class="page-number" href="blog.html">2</a>
+                  </li>
+                  <li>
+                    <a class="page-number" href="blog.html">3</a>
+                  </li>
+                  <li>
+                    <a class="page-number next" href="blog.html">
+                      Next
+                      <i class="ion-ios-arrow-right"></i>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+              <div class="total-pages">
+                <p>Showing 1 - 15 of 33 result</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="shop-sidebar-area">
+              <div class="widget">
+                <h3 class="widget-title">Search</h3>
+                <div class="widget-search-box">
+                  <form action="#" method="post">
+                    <div class="form-input-item">
+                      <label for="search2" class="sr-only">Search Here</label>
+                      <input type="text" id="search2" placeholder="Search our store">
+                      <button type="submit" class="btn-src"><i class="ion-ios-search-strong"></i></button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+              <div class="widget">
+                <h3 class="widget-title mb-25">Custom Categories</h3>
+                <div class="widget-categories-menu">
+                  <ul>
+                    <li class="has-sub">
+                      <a class="collapsed" data-bs-toggle="collapse" data-bs-target="#sub-menu" aria-expanded="false">Home</a>
+                      <ul class="collapse" id="sub-menu">
+                        <li><a href="#/">Home 1</a></li>
+                        <li><a href="#/">Home 2</a></li>
+                      </ul>
+                    </li>
+                    <li class="has-sub">
+                      <a class="collapsed" data-bs-toggle="collapse" data-bs-target="#sub-menu2" aria-expanded="false">Shop</a>
+                      <ul class="collapse" id="sub-menu2">
+                        <li><a href="#/">Cutting Board</a></li>
+                        <li><a href="#/">Stainless steel</a></li>
+                        <li><a href="#/">Marble</a></li>
+                        <li><a href="#/">Granite</a></li>
+                      </ul>
+                    </li>
+                    <li class="has-sub">
+                      <a class="collapsed" data-bs-toggle="collapse" data-bs-target="#sub-menu3" aria-expanded="false">Product</a>
+                      <ul class="collapse" id="sub-menu3">
+                        <li><a href="#/">Simple product</a></li>
+                        <li><a href="#/">variable Product</a></li>
+                        <li><a href="#/">Affiliate product</a></li>
+                        <li><a href="#/">Countdown Product</a></li>
+                        <li><a href="#/">Soldout product</a></li>
+                      </ul>
+                    </li>
+                    <li><a href="#/">Blog</a></li>
+                    <li><a href="#/">About</a></li>
+                    <li><a href="#/">Contact</a></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="widget">
+                <h3 class="widget-title">Categories</h3>
+                <div class="widget-categories-menu">
+                  <ul>
+                    <li><a href="#/">Accessories <span>(15)</span></a></li>
+                    <li><a href="#/">Featured Product <span>(17)</span></a></li>
+                    <li><a href="#/">New Products <span>(16)</span></a></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="widget">
+                <h3 class="widget-title">Vendors</h3>
+                <div class="widget-list-style">
+                  <ul>
+                    <li><a href="#/">Vendor 1</a></li>
+                    <li><a href="#/">Vendor 10</a></li>
+                    <li><a href="#/">Vendor 11</a></li>
+                    <li><a href="#/">Vendor 2</a></li>
+                    <li><a href="#/">Vendor 3</a></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="widget">
+                <h3 class="widget-title">Color</h3>
+                <div class="widget-list-style">
+                  <ul>
+                    <li><a href="#/">Red</a></li>
+                    <li><a href="#/">Green</a></li>
+                    <li><a href="#/">Blue</a></li>
+                    <li><a href="#/">Yellow</a></li>
+                    <li><a href="#/">White</a></li>
+                    <li><a href="#/">Gold</a></li>
+                    <li><a href="#/">Gray</a></li>
+                    <li><a href="#/">Magenta</a></li>
+                    <li><a href="#/">Maroon</a></li>
+                    <li><a href="#/">Navy</a></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="widget">
+                <h3 class="widget-title">Size</h3>
+                <div class="widget-size-list">
+                  <ul>
+                    <li><a href="#/">S</a></li>
+                    <li><a href="#/">M</a></li>
+                    <li><a href="#/">L</a></li>
+                    <li><a href="#/">XL</a></li>
+                    <li><a href="#/">Xxl</a></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="widget">
+                <h3 class="widget-title">Tags</h3>
+                <div class="widget-tags-list">
+                  <ul>
+                    <li><a href="#/">All</a></li>
+                    <li><a href="#/">black</a></li>
+                    <li><a href="#/">blue</a></li>
+                    <li><a href="#/">fiber</a></li>
+                    <li><a href="#/">gold</a></li>
+                    <li><a href="#/">gray</a></li>
+                    <li><a href="#/">green</a></li>
+                    <li><a href="#/">l</a></li>
+                    <li><a href="#/">leather</a></li>
+                    <li><a href="#/">m</a></li>
+                    <li><a href="#/">magenta</a></li>
+                    <li><a href="#/">maroon</a></li>
+                    <li><a href="#/">metal</a></li>
+                    <li><a href="#/">navy</a></li>
+                    <li><a href="#/">orange</a></li>
+                    <li><a href="#/">pink</a></li>
+                    <li><a href="#/">purple</a></li>
+                    <li><a href="#/">red</a></li>
+                    <li><a href="#/">resin</a></li>
+                    <li><a href="#/">s</a></li>
+                    <li><a href="#/">silver</a></li>
+                    <li><a href="#/">slag</a></li>
+                    <li><a href="#/">violet</a></li>
+                    <li><a href="#/">white</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--== End Shop Area Wrapper ==-->
+  </main>
+{% endblock content %}

@@ -1,0 +1,276 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+  <main class="main-content site-wrapper-reveal">
+    <!--== Start Page Title Area ==-->
+    <section class="page-title-area" data-bg-img="{% static 'assets/img/photos/bg-page-title.webp'%}">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="page-title-content text-center">
+              <h2 class="title text-white">{{ product.name }}</h2>
+              <div class="bread-crumbs"><a href="{% url 'home' %}">Home<span class="breadcrumb-sep">/</span></a><span class="active">{{ product.name }}</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--== End Page Title Area ==-->
+
+    <!--== Start Shop Area ==-->
+    <section class="shop-area shop_single_product">
+      <div class="container pb-md-50 pb-95 pt-50">
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="single-product-slider">
+              <div class="single-product-thumb">
+                <div class="swiper-container single-product-thumb-slider">
+                  <div class="swiper-wrapper">
+                    {% for image in product_images %}
+                    <div class="swiper-slide zoom zoom-hover">
+                      <div class="thumb-item">
+                        <a class="lightbox-image" data-fancybox="gallery" href="{{ image.image.url }}">
+                          <img src="{{ image.image.url }}" alt="{{ image.alt_text }}">
+                        </a>
+                      </div>
+                    </div>
+                    {% endfor %}
+                  </div>
+
+                </div>
+              </div>
+              <div class="single-product-nav">
+                <div class="swiper-container single-product-nav-slider">
+                  <div class="swiper-wrapper">
+                    {% for image in product_images %}
+                    <div class="swiper-slide">
+                      <div class="nav-item">
+                        <img src="{{ image.image.url }}" alt="{{ image.alt_text }}">
+                      </div>
+                    </div>
+                    {% endfor %}
+                  </div>
+                  <div class="swiper-button-prev"></div>
+                  <div class="swiper-button-next"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="single-product-info mt-md-30 mt-20">
+              <h4 class="title">{{ product.name }}</h4>
+              <div class="product-ratting">
+                <div class="ratting-icons">
+                  <i class="fa fa-star-o"></i>
+                  <i class="fa fa-star-o"></i>
+                  <i class="fa fa-star-o"></i>
+                  <i class="fa fa-star-o"></i>
+                  <i class="fa fa-star-o"></i>
+                </div>
+                <div class="ratting-caption">No Reviews</div>
+              </div>
+              <div class="prices">
+                <span class="price"> {{ product.price }} </span>
+              </div>
+              <div class="product-number">
+                SKU: <span>{{ product.sku }}</span>
+              </div>
+              <p class="product-desc">{{product.short_description}}</p>
+              <div class="quick-product-action">
+                <div class="action-top">
+                  <div class="pro-qty">
+                      <input type="text" id="quantity" title="Quantity" value="1" />
+                  </div>
+                  <button class="btn btn-black"><i class="fa fa-opencart"></i>Add to cart</button>
+                  <a class="btn-wishlist" href="#"><i class="ti-heart"></i></a>
+                </div>
+                <div class="action-bottom">
+                  <a class="btn-theme" href="{% static 'shop-checkout'%}">Buy it now</a>
+                </div>
+              </div>
+              <div class="payment-support">
+                <h5>Guaranteed Safe Checkout</h5>
+                <ul class="payment-items">
+                  <li class="payment-item">
+                    <svg class="payment-icon-name" viewBox="0 0 38 24" xmlns="http://www.w3.org/2000/svg" role="img" width="38" height="24" aria-labelledby="pi-visa"><title id="pi-visa">Visa</title><path opacity=".07" d="M35 0H3C1.3 0 0 1.3 0 3v18c0 1.7 1.4 3 3 3h32c1.7 0 3-1.3 3-3V3c0-1.7-1.4-3-3-3z"></path><path fill="#fff" d="M35 1c1.1 0 2 .9 2 2v18c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2V3c0-1.1.9-2 2-2h32"></path><path d="M28.3 10.1H28c-.4 1-.7 1.5-1 3h1.9c-.3-1.5-.3-2.2-.6-3zm2.9 5.9h-1.7c-.1 0-.1 0-.2-.1l-.2-.9-.1-.2h-2.4c-.1 0-.2 0-.2.2l-.3.9c0 .1-.1.1-.1.1h-2.1l.2-.5L27 8.7c0-.5.3-.7.8-.7h1.5c.1 0 .2 0 .2.2l1.4 6.5c.1.4.2.7.2 1.1.1.1.1.1.1.2zm-13.4-.3l.4-1.8c.1 0 .2.1.2.1.7.3 1.4.5 2.1.4.2 0 .5-.1.7-.2.5-.2.5-.7.1-1.1-.2-.2-.5-.3-.8-.5-.4-.2-.8-.4-1.1-.7-1.2-1-.8-2.4-.1-3.1.6-.4.9-.8 1.7-.8 1.2 0 2.5 0 3.1.2h.1c-.1.6-.2 1.1-.4 1.7-.5-.2-1-.4-1.5-.4-.3 0-.6 0-.9.1-.2 0-.3.1-.4.2-.2.2-.2.5 0 .7l.5.4c.4.2.8.4 1.1.6.5.3 1 .8 1.1 1.4.2.9-.1 1.7-.9 2.3-.5.4-.7.6-1.4.6-1.4 0-2.5.1-3.4-.2-.1.2-.1.2-.2.1zm-3.5.3c.1-.7.1-.7.2-1 .5-2.2 1-4.5 1.4-6.7.1-.2.1-.3.3-.3H18c-.2 1.2-.4 2.1-.7 3.2-.3 1.5-.6 3-1 4.5 0 .2-.1.2-.3.2M5 8.2c0-.1.2-.2.3-.2h3.4c.5 0 .9.3 1 .8l.9 4.4c0 .1 0 .1.1.2 0-.1.1-.1.1-.1l2.1-5.1c-.1-.1 0-.2.1-.2h2.1c0 .1 0 .1-.1.2l-3.1 7.3c-.1.2-.1.3-.2.4-.1.1-.3 0-.5 0H9.7c-.1 0-.2 0-.2-.2L7.9 9.5c-.2-.2-.5-.5-.9-.6-.6-.3-1.7-.5-1.9-.5L5 8.2z" fill="#142688"></path></svg>
+                  </li>
+                  <li>
+                    <svg class="payment-icon-name" viewBox="0 0 38 24" xmlns="http://www.w3.org/2000/svg" role="img" width="38" height="24" aria-labelledby="pi-master"><title id="pi-master">Mastercard</title><path opacity=".07" d="M35 0H3C1.3 0 0 1.3 0 3v18c0 1.7 1.4 3 3 3h32c1.7 0 3-1.3 3-3V3c0-1.7-1.4-3-3-3z"></path><path fill="#fff" d="M35 1c1.1 0 2 .9 2 2v18c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2V3c0-1.1.9-2 2-2h32"></path><circle fill="#EB001B" cx="15" cy="12" r="7"></circle><circle fill="#F79E1B" cx="23" cy="12" r="7"></circle><path fill="#FF5F00" d="M22 12c0-2.4-1.2-4.5-3-5.7-1.8 1.3-3 3.4-3 5.7s1.2 4.5 3 5.7c1.8-1.2 3-3.3 3-5.7z"></path></svg>
+                  </li>                
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--== End Shop Area ==-->
+
+    <!--== Start Shop Area ==-->
+    <section class="product-description-review-area">
+      <div class="container pb-md-20">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="product-description-review">
+              <ul class="nav nav-tabs product-description-tab-menu" id="myTab" role="tablist">
+                <li class="nav-item">
+                  <a class="nav-link active" id="product-desc-tab" data-toggle="tab" href="#descProduct" role="tab" aria-controls="descProduct" aria-selected="true">Description</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" id="product-info-tab" data-toggle="tab" href="#reviewProduct" role="tab" aria-controls="reviewProduct" aria-selected="false">Reviews</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" id="product-review-tab" data-toggle="tab" href="#commentProduct" role="tab" aria-controls="commentProduct" aria-selected="false">Comments</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" id="product-custom-tab" data-toggle="tab" href="#policyProduct" role="tab" aria-controls="policyProduct" aria-selected="false">Shipping Policy</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" id="product-custom-tab" data-toggle="tab" href="#sizeProduct" role="tab" aria-controls="sizeProduct" aria-selected="false">Size chart</a>
+                </li>
+              </ul>
+              <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="descProduct" role="tabpanel" aria-labelledby="product-desc-tab">
+                  <div class="product-desc"><p>{{product.long_description}}</p></div>
+                </div>
+                <div class="tab-pane fade" id="infoProduct" role="tabpanel" aria-labelledby="product-info-tab">
+                  <div class="product-additional-info">
+                    <table class="table">
+                      <tbody>
+                        <tr>
+                          <th scope="row">Size</th>
+                          <td>L, M, S, XL, XXL</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Color</th>
+                          <td>Blue, Gray, Green, Pink</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class="tab-pane fade" id="reviewProduct" role="tabpanel" aria-labelledby="product-review-tab">
+                  <div class="product-review">
+                    <h3 class="title">REVIEWS</h3>
+                    <div class="review-comment">
+                      <p>There are no reviews yet.</p>
+                      <h5>BE THE FIRST TO REVIEW “TWO TONE DRESS”</h5>
+                    </div>
+                    <div class="product-review-form">
+                      <p>Your email address will not be published. Required fields are marked <span>*</span></p>
+                      <div class="rating">
+                        <span class="rating-title">Your rating <span>*</span></span>
+                        <span>
+                          <a class="star-1" href="#/"></a>
+                          <a class="star-2" href="#/"></a>
+                          <a class="star-3" href="#/"></a>
+                          <a class="star-4" href="#/"></a>
+                          <a class="star-5" href="#/"></a>
+                        </span>
+                      </div>
+                      <form action="#" method="post">
+                        <div class="review-form-content">
+                          <div class="row">
+                            <div class="col-md-12">
+                              <div class="form-group">
+                                <label for="reviewFormTextarea">Your review <span>*</span></label>
+                                <textarea class="form-control" id="reviewFormTextarea" name="comment" rows="7" placeholder="Your review *" required></textarea>
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="form-group">
+                                <label for="reviewFormName">Name <span>*</span></label>
+                                <input class="form-control" id="reviewFormName" type="text" placeholder="Name *" required />
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="form-group">
+                                <label for="reviewFormEmail">Email <span>*</span></label>
+                                <input class="form-control" id="reviewFormEmail" type="email" placeholder="Email *" required />
+                              </div>
+                            </div>
+                            <div class="col-md-12">
+                              <div class="form-group mb-20">
+                                <div class="form-check">
+                                  <input class="form-check-input position-static ml-0" type="checkbox" value="" id="reviewFormCheck">
+                                  <label class="form-check-label" for="reviewFormCheck">
+                                    Save my name, email, and website in this browser for the next time I comment.
+                                  </label>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-12">
+                              <div class="form-group">
+                                <button class="btn btn-theme btn-border" type="submit">Submit</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-pane fade" id="customProduct" role="tabpanel" aria-labelledby="product-custom-tab">
+                  <div class="product-desc">
+                    <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--== End Shop Area ==-->
+
+    <!--== Start Featured Product Area Wrapper ==-->
+    <section class="product-area featured-product-area">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-8 col-lg-6 m-auto">
+            <div class="section-title text-center">
+              <h2 class="title">Related Product</h2>
+              <p>Add your Description here</p>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6 col-sm-6 col-md-4 col-lg-3">
+            <!-- Start Product Item -->
+            <div class="product-item">
+              <div class="product-thumb">
+                <a href="{% url 'shop_single_product' 1%}">
+                  <img src="{% static 'assets/img/shop/6.png'%}" alt="Alan-Shop">
+                  <span class="ribbon ribbon-hot">Sale</span>
+                  <span class="ribbon ribbon-onsale align-right">-35%</span>
+                </a>
+                <div class="countdown-content">
+                  <ul class="countdown-timer">
+                    <li><span class="days">00</span><p class="days_text">Days</p></li>
+                    <li><span class="hours">00</span><p class="hours_text">Hour</p></li>
+                    <li><span class="minutes">00</span><p class="minutes_text">Mint</p></li>
+                    <li><span class="seconds">00</span><p class="seconds_text">Sec</p></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="product-info">
+                <h4 class="title"><a href="{% url 'shop_single_product' 1%}">8. Countdown product</a></h4>
+                <div class="prices">
+                  <span class="price">$39.00</span>
+                  <del class="price-old">$60.00</del>
+                </div>
+              </div>
+            </div>
+            <!-- End Product Item -->
+          </div>
+
+        </div>
+      </div>
+    </section>
+    <!--== End Featured Product Area Wrapper ==-->
+  </main>
+{% endblock content %}

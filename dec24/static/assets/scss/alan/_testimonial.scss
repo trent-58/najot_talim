@@ -1,0 +1,45 @@
+/*
+-----------------------------------------------------------------------
+	Testimonial CSS
+-----------------------------------------------------------------------
+*/
+.testimonial-area {
+	&.testimonial-default-area {
+		background-color: #f7f7f7;
+		padding: 100px 0;
+	}
+}
+
+.testimonial-single {
+	text-align: center;
+	.client-thumb-wrp {
+		.client-thumb {
+			img {}
+		}
+	}
+	.client-content {
+		p {
+			color: #4b4747;
+			font-size: 22px;
+			font-weight: 400;
+			font-style: italic;
+			line-height: 30px;
+			margin-bottom: 34px;
+			margin-top: 20px;
+		}
+	}
+	.client-info {
+		.name {
+			color: #505050;
+			font-size: 12px;
+			font-weight: 900;
+			text-transform: uppercase;
+			margin-bottom: 11px;
+		}
+		.designation {
+			color: #8f8f8f;
+			font-size: 12px;
+			font-weight: 500;
+		}
+	}
+}
