@@ -1,0 +1,42 @@
+// Table of contents
+@import "tableofcontent";
+
+// Base
+@import "common/variables";
+@import "common/mixins";
+@import "common/rfs";
+
+// Typography
+ @import "common/typography";
+
+// Common Styles
+@import "alan/common";
+@import "alan/navbar";
+
+// Header
+@import "header/header";
+
+// Banner Styles
+@import "alan/banner";
+
+// Components
+@import "alan/about";
+@import "alan/team";
+@import "alan/gallery";
+@import "alan/testimonial";
+@import "alan/brand-logo";
+@import "alan/divider";
+@import "alan/icon-box";
+@import "alan/form";
+@import "alan/shop";
+
+
+
+// Blog
+@import "alan/blog";
+
+// Contact
+@import "alan/contact";
+
+// Footer
+@import "footer/footer";

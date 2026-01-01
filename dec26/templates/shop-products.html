@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+    <section class="product-area latest-product-area" data-aos="fade-up" data-aos-duration="1000">
+        <div class="container">
+            <div class="row">
+                <div class="swiper-container product4-slider-container">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            {% for product in products %}
+                            <div class="product-item">
+
+                                <div class="product-thumb">
+
+
+                                    <a href="{% url 'shop:shop_single_product' product.pk %}">
+
+                                        <img src="{{ product.get_primary_image.image.url }}" alt="{{ product.get_primary_image.alt_text }}">
+                                        {% if product.discount_price > 0 %}
+                                        <div class="ribbons">
+                                            <span class="ribbon ribbon-hot">Sale</span>
+                                            <span class="ribbon ribbon-onsale align-right">-{{ product.discount_percentage }}%</span>
+                                        </div>
+                                        {% endif %}
+                                    </a>
+
+
+                                    <div class="product-action">
+                                        <a class="action-wishlist" href="shop-wishlist.html" title="Wishlist">
+                                            <i class="ion-android-favorite-outline"></i>
+                                        </a>
+                                        <a class="action-quick-view" href="javascript:void(0);" title="Quick View">
+                                            <i class="ion-ios-search-strong"></i>
+                                        </a>
+                                        <a class="action-cart" href="{% url 'cart:add' product.pk %}" title="Add to Cart">
+                                            <i class="fa fa-opencart"></i>
+                                        </a>
+                                    </div>
+
+
+                                </div>
+
+
+
+                                <div class="product-info">
+                                    <h4 class="title"><a href="{% url 'shop:shop_single_product' product.pk %}">{{ product.name }}</a></h4>
+                                    <div class="prices">
+                                        {% if product.discount_price %}
+                                            <span class="price">${{ product.discount_price }}</span>
+                                            <del class="price-old">${{ product.price }}</del>
+                                        {% else %}
+                                            <span class="price">${{ product.price }}</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+
+
+
+{% endblock content %}

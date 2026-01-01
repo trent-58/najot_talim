@@ -1,0 +1,68 @@
+/*
+-----------------------------------------------------------------------
+	Contact CSS
+-----------------------------------------------------------------------
+*/
+.contact-area {
+	padding: 100px 0 108px;
+	position: relative;
+	.section-title {
+		margin-bottom: 30px;
+		.title {
+			font-size: 30px;
+			font-weight: 500;
+			margin-bottom: 9px;
+		}
+		p {
+			font-weight: 500;
+			line-height: 24px;
+		}
+	}
+}
+
+.account-login-area {
+	.section-title {
+		margin-bottom: 28px;
+		.title {
+			color: #333333;
+			font-size: 30px;
+		}
+		p {
+			color: #666666;
+			font-size: 15px;
+			margin-top: 3px;
+		}
+	}
+}
+
+.contact-info-content {
+	.contact-info-item {
+		margin-bottom: 28px;
+		.content {
+			h4 {
+				font-family: $font-current-theme2;
+				font-size: 18px;
+				font-weight: 500;
+				margin: 0 0 4px;
+				line-height: 21px;
+			}
+			p {
+				line-height: 26px;
+			}
+		}
+	}
+}
+
+.contact-map-area {
+	height: 500px;
+	@media #{$sm-device} {
+		height: 400px;
+	}
+	iframe {
+	  height: 100%;
+	  width: 100%;
+	  @media #{$xs-device} {
+	  	height: 300px;
+	  }
+	}
+}

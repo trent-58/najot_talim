@@ -1,0 +1,168 @@
+{% extends "base.html" %}
+{% block title %}Edit Profile{% endblock %}
+
+{% block content %}
+
+<style>
+    body {
+        background: #f5f7fc;
+    }
+
+    .account-wrapper {
+        display: flex;
+        justify-content: center;
+        padding: 50px 15px;
+    }
+
+    .account-card {
+        background: #fff;
+        max-width: 600px;
+        width: 100%;
+        padding: 40px;
+        border-radius: 14px;
+        box-shadow: 0 15px 45px rgba(0,0,0,0.08);
+    }
+
+    .account-card h2 {
+        text-align: center;
+        margin-bottom: 5px;
+        font-size: 26px;
+    }
+
+    .account-subtitle {
+        text-align: center;
+        font-size: 14px;
+        color: #777;
+        margin-bottom: 30px;
+    }
+
+    .form-group {
+        margin-bottom: 18px;
+    }
+
+    .form-group label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 6px;
+        font-size: 14px;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+        width: 100%;
+        padding: 11px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        font-size: 14px;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+        border-color: #6c63ff;
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(108,99,255,0.15);
+    }
+
+    .has-error input,
+    .has-error textarea {
+        border-color: #dc2626;
+    }
+
+    .error {
+        font-size: 13px;
+        color: #dc2626;
+        margin-top: 4px;
+    }
+
+    .help-text {
+        font-size: 12px;
+        color: #666;
+        margin-top: 4px;
+    }
+
+    .current-image {
+        max-width: 150px;
+        max-height: 150px;
+        border-radius: 8px;
+        margin-top: 10px;
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .btn-action {
+        flex: 1;
+        padding: 14px;
+        border: none;
+        border-radius: 10px;
+        font-weight: bold;
+        font-size: 15px;
+        cursor: pointer;
+        text-decoration: none;
+        text-align: center;
+    }
+
+    .btn-save {
+        background: #6c63ff;
+        color: white;
+    }
+
+    .btn-save:hover {
+        background: #574fe0;
+    }
+
+    .btn-cancel {
+        background: #e0e0e0;
+        color: #333;
+    }
+
+    .btn-cancel:hover {
+        background: #d0d0d0;
+    }
+</style>
+
+<div class="account-wrapper">
+    <div class="account-card">
+        <h2>Edit Profile</h2>
+        <p class="account-subtitle">Update your personal information</p>
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+
+            {% for field in form %}
+                <div class="form-group {% if field.errors %}has-error{% endif %}">
+                    {{ field.label_tag }}
+                    {{ field }}
+
+                    {% if field.name == 'profile_picture' and user.profile_picture %}
+                        <div>
+                            <p style="font-size: 12px; color: #666; margin-top: 5px;">Current image:</p>
+                            <img src="{{ user.profile_picture.url }}" alt="Current Profile" class="current-image">
+                        </div>
+                    {% endif %}
+
+                    {% if field.help_text %}
+                        <div class="help-text">{{ field.help_text }}</div>
+                    {% endif %}
+
+                    {% for error in field.errors %}
+                        <div class="error">{{ error }}</div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+
+            <div class="action-buttons">
+                <button type="submit" class="btn-action btn-save">Save Changes</button>
+                <a href="{% url 'user:detail' %}" class="btn-action btn-cancel">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
+

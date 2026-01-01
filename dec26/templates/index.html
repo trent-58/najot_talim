@@ -1,0 +1,234 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<main class="main-content">
+  <!--== Start Hero Area Wrapper ==-->
+  <section class="home-slider-area slider-default">
+    <div class="home-slider-content">
+      <div class="swiper-container home-slider-container">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide">
+            <!-- Start Slide Item -->
+            <div class="home-slider-item bg-img-cover" data-bg-img="{% static 'assets/img/slider/1.png' %}">
+              <div class="slider-content-area">
+                <div class="container">
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="content m-auto">
+                        <div class="inner-content">
+                          <div class="tittle-wrp">
+                            <h2>Welcome to Our Shop <br>New Collection</h2>
+                          </div>
+                          <div class="btn-wrp">
+                            <a href="{% url 'shop:shop' %}" class="btn-link">Shop Now</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- End Slide Item -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!--== End Hero Area Wrapper ==-->
+
+  <!--== Start Product Area Wrapper ==-->
+  <section class="product-area latest-product-area" data-aos="fade-up" data-aos-duration="1000">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 col-lg-6 m-auto">
+          <div class="section-title text-center">
+            <h2 class="title">Latest Products</h2>
+            <p>Our newest arrivals</p>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="swiper-container product4-slider-container">
+          <div class="swiper-wrapper">
+            {% for product in latest_products %}
+            <div class="swiper-slide">
+              <div class="product-item">
+                <div class="product-thumb">
+                  <a href="{% url 'shop:shop_single_product' product.pk %}">
+                    {% if product.get_primary_image %}
+                      <img src="{{ product.get_primary_image.image.url }}" alt="{{ product.name }}">
+                    {% else %}
+                      <img src="{% static 'assets/img/shop/1.png' %}" alt="{{ product.name }}">
+                    {% endif %}
+                    {% if product.discount_percentage %}
+                    <div class="ribbons">
+                      <span class="ribbon ribbon-hot">Sale</span>
+                      <span class="ribbon ribbon-onsale align-right">-{{ product.discount_percentage }}%</span>
+                    </div>
+                    {% endif %}
+                  </a>
+                  <div class="product-action">
+                    <a class="action-wishlist" href="#" title="Wishlist">
+                      <i class="ion-android-favorite-outline"></i>
+                    </a>
+                    <a class="action-quick-view" href="{% url 'shop:shop_single_product' product.pk %}" title="Quick View">
+                      <i class="ion-ios-search-strong"></i>
+                    </a>
+                    <a class="action-cart" href="{% url 'cart:add' product.pk %}" title="Add to Cart">
+                      <i class="fa fa-opencart"></i>
+                    </a>
+                  </div>
+                </div>
+                <div class="product-info">
+                  <h4 class="title">
+                    <a href="{% url 'shop:shop_single_product' product.pk %}">
+                      {{ product.name|truncatewords:5 }}
+                    </a>
+                  </h4>
+                  <div class="prices">
+                    {% if product.discount_price %}
+                      <span class="price">${{ product.discount_price }}</span>
+                      <del class="price-old">${{ product.price }}</del>
+                    {% else %}
+                      <span class="price">${{ product.price }}</span>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% empty %}
+            <div class="swiper-slide">
+              <div class="col-12 text-center">
+                <p>No products available yet.</p>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!--== End Product Area Wrapper ==-->
+
+  <!--== Start Offer Area Wrapper ==-->
+  <section class="offer-area" data-aos="fade-up" data-aos-duration="1000">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="single-offer">
+            <div class="thumb">
+              {% if featured_products.0 %}
+              <a href="{% url 'shop:shop_single_product' featured_products.0.pk %}">
+                {% if featured_products.0.get_primary_image %}
+                  <img src="{{ featured_products.0.get_primary_image.image.url }}" alt="{{ featured_products.0.name }}">
+                {% else %}
+                  <img src="{% static 'assets/img/shop/offer-1.webp' %}" alt="Special Offer">
+                {% endif %}
+              </a>
+              {% else %}
+              <a href="{% url 'shop:shop' %}">
+                <img src="{% static 'assets/img/shop/offer-1.webp' %}" alt="Special Offer">
+              </a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="single-offer">
+            <div class="thumb">
+              {% if featured_products.1 %}
+              <a href="{% url 'shop:shop_single_product' featured_products.1.pk %}">
+                {% if featured_products.1.get_primary_image %}
+                  <img src="{{ featured_products.1.get_primary_image.image.url }}" alt="{{ featured_products.1.name }}">
+                {% else %}
+                  <img src="{% static 'assets/img/shop/offer-2.webp' %}" alt="Special Offer">
+                {% endif %}
+              </a>
+              {% else %}
+              <a href="{% url 'shop:shop' %}">
+                <img src="{% static 'assets/img/shop/offer-2.webp' %}" alt="Special Offer">
+              </a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!--== End Offer Area Wrapper ==-->
+
+  <!--== Start Featured Product Area Wrapper ==-->
+  <section class="product-area featured-product-area" data-aos="fade-up" data-aos-duration="1000">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 col-lg-6 m-auto">
+          <div class="section-title text-center">
+            <h2 class="title">Featured Products</h2>
+            <p>Best selling items in our collection</p>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        {% for product in featured_products %}
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+          <!-- Start Product Item -->
+          <div class="product-item">
+            <div class="product-thumb">
+              <a href="{% url 'shop:shop_single_product' product.pk %}">
+                {% if product.get_primary_image %}
+                  <img src="{{ product.get_primary_image.image.url }}" alt="{{ product.name }}">
+                {% else %}
+                  <img src="{% static 'assets/img/shop/1.png' %}" alt="{{ product.name }}">
+                {% endif %}
+                {% if product.discount_percentage %}
+                <div class="ribbons">
+                  <span class="ribbon ribbon-hot">Sale</span>
+                  <span class="ribbon ribbon-onsale align-right">-{{ product.discount_percentage }}%</span>
+                </div>
+                {% endif %}
+              </a>
+              <div class="product-action">
+                <a class="action-wishlist" href="#" title="Wishlist">
+                  <i class="ion-android-favorite-outline"></i>
+                </a>
+                <a class="action-quick-view" href="{% url 'shop:shop_single_product' product.pk %}" title="Quick View">
+                  <i class="ion-ios-search-strong"></i>
+                </a>
+                <a class="action-cart" href="{% url 'cart:add' product.pk %}" title="Add to Cart">
+                  <i class="fa fa-opencart"></i>
+                </a>
+              </div>
+            </div>
+            <div class="product-info">
+              <h4 class="title">
+                <a href="{% url 'shop:shop_single_product' product.pk %}">
+                  {{ product.name|truncatewords:5 }}
+                </a>
+              </h4>
+              <div class="prices">
+                {% if product.discount_price %}
+                  <span class="price">${{ product.discount_price }}</span>
+                  <del class="price-old">${{ product.price }}</del>
+                {% else %}
+                  <span class="price">${{ product.price }}</span>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+          <!-- End Product Item -->
+        </div>
+        {% empty %}
+        <div class="col-12 text-center">
+          <p>No featured products available yet.</p>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+  <!--== End Featured Product Area Wrapper ==-->
+</main>
+
+{% endblock content %}
+

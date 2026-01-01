@@ -1,0 +1,47 @@
+/*
+-----------------------------------------------------------------------
+    Divider CSS
+-----------------------------------------------------------------------
+*/
+.divider-area {
+  &.divider-default-area {
+  }
+}
+
+.newsletter-area {
+	background-color: $white-f8;
+	padding: 89px 0 100px;
+    @media #{$lg-device} {
+    	padding: 61px 0 70px;
+    }
+	.section-title {
+		margin-bottom: 43px;
+	}
+}
+
+.video-area {
+	padding: 31px 0 0;
+	.section-title {
+		margin-bottom: 49px;
+	}
+}
+
+.video-content {
+	.thumb {
+		position: relative;
+		img {
+			width: 100%;
+		}
+		.btn-play {
+			left: 50%;
+			position: absolute;
+			top: 50%;
+			@include translate(-50%, -50%);
+			.icon {
+				img {
+					width: auto;
+				}
+			}
+		}
+	}
+}

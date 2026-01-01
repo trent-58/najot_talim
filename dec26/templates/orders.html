@@ -1,0 +1,423 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}My Orders{% endblock %}
+
+{% block content %}
+
+<style>
+    body {
+        background: #f6f7fb;
+    }
+
+    .orders-wrapper {
+        padding: 80px 15px;
+        min-height: 70vh;
+    }
+
+    .orders-header {
+        text-align: center;
+        margin-bottom: 50px;
+    }
+
+    .orders-header h2 {
+        font-size: 36px;
+        font-weight: 700;
+        color: #222;
+        margin-bottom: 15px;
+    }
+
+    .orders-header p {
+        color: #666;
+        font-size: 16px;
+    }
+
+    .orders-content {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .order-card {
+        background: #fff;
+        border-radius: 12px;
+        padding: 30px;
+        margin-bottom: 25px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        transition: all 0.3s;
+    }
+
+    .order-card:hover {
+        box-shadow: 0 5px 20px rgba(0,0,0,0.12);
+    }
+
+    .order-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-bottom: 20px;
+        border-bottom: 2px solid #f0f0f0;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .order-info {
+        display: flex;
+        gap: 30px;
+        flex-wrap: wrap;
+    }
+
+    .order-info-item {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .order-info-label {
+        font-size: 12px;
+        text-transform: uppercase;
+        color: #999;
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
+
+    .order-info-value {
+        font-size: 15px;
+        font-weight: 600;
+        color: #222;
+    }
+
+    .order-number {
+        font-size: 18px;
+        font-weight: 700;
+        color: #6c63ff;
+    }
+
+    .order-status {
+        display: inline-block;
+        padding: 8px 20px;
+        border-radius: 20px;
+        font-size: 13px;
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+
+    .status-pending {
+        background: #fff3cd;
+        color: #856404;
+    }
+
+    .status-processing {
+        background: #cfe2ff;
+        color: #084298;
+    }
+
+    .status-shipped {
+        background: #d1e7dd;
+        color: #0f5132;
+    }
+
+    .status-delivered {
+        background: #d1e7dd;
+        color: #0a3622;
+    }
+
+    .status-cancelled {
+        background: #f8d7da;
+        color: #842029;
+    }
+
+    .order-items {
+        margin-top: 20px;
+    }
+
+    .order-item {
+        display: flex;
+        gap: 20px;
+        padding: 15px;
+        margin-bottom: 15px;
+        background: #f9f9ff;
+        border-radius: 8px;
+        align-items: center;
+    }
+
+    .order-item-image {
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+        border-radius: 8px;
+        border: 1px solid #e0e0e0;
+    }
+
+    .order-item-details {
+        flex: 1;
+    }
+
+    .order-item-name {
+        font-size: 16px;
+        font-weight: 600;
+        color: #222;
+        margin-bottom: 5px;
+    }
+
+    .order-item-sku {
+        font-size: 13px;
+        color: #999;
+        margin-bottom: 5px;
+    }
+
+    .order-item-quantity {
+        font-size: 14px;
+        color: #666;
+    }
+
+    .order-item-price {
+        font-size: 16px;
+        font-weight: 600;
+        color: #6c63ff;
+        text-align: right;
+    }
+
+    .order-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 20px;
+        padding-top: 20px;
+        border-top: 2px solid #f0f0f0;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .order-total {
+        font-size: 20px;
+        font-weight: 700;
+        color: #222;
+    }
+
+    .order-total span {
+        color: #6c63ff;
+    }
+
+    .order-date {
+        font-size: 14px;
+        color: #999;
+    }
+
+    .btn-view-order {
+        padding: 10px 25px;
+        background: #6c63ff;
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+        transition: all 0.3s;
+    }
+
+    .btn-view-order:hover {
+        background: #574fe0;
+        transform: translateY(-2px);
+    }
+
+    .empty-orders {
+        text-align: center;
+        padding: 100px 20px;
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
+
+    .empty-orders-icon {
+        font-size: 80px;
+        color: #e0e0e0;
+        margin-bottom: 30px;
+    }
+
+    .empty-orders h3 {
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 15px;
+        color: #222;
+    }
+
+    .empty-orders p {
+        color: #666;
+        margin-bottom: 30px;
+        font-size: 16px;
+    }
+
+    .btn-shop-now {
+        padding: 15px 40px;
+        background: #6c63ff;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 700;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+        transition: all 0.3s;
+    }
+
+    .btn-shop-now:hover {
+        background: #574fe0;
+        transform: translateY(-2px);
+    }
+
+    .shipping-address {
+        margin-top: 15px;
+        padding: 15px;
+        background: #fff;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+    }
+
+    .shipping-address h5 {
+        font-size: 14px;
+        font-weight: 700;
+        margin-bottom: 10px;
+        color: #222;
+    }
+
+    .shipping-address p {
+        font-size: 13px;
+        color: #666;
+        margin: 3px 0;
+    }
+
+    @media (max-width: 768px) {
+        .order-header {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .order-info {
+            gap: 15px;
+        }
+
+        .order-item {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .order-item-price {
+            text-align: center;
+        }
+
+        .order-footer {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .orders-header h2 {
+            font-size: 28px;
+        }
+    }
+</style>
+
+<div class="orders-wrapper">
+    <div class="container">
+        <div class="orders-header">
+            <h2>My Orders</h2>
+            <p>Track and manage your orders</p>
+        </div>
+
+        <div class="orders-content">
+            {% if orders %}
+                {% for order in orders %}
+                <div class="order-card">
+                    <div class="order-header">
+                        <div class="order-info">
+                            <div class="order-info-item">
+                                <span class="order-info-label">Order Number</span>
+                                <span class="order-number">#{{ order.order_number }}</span>
+                            </div>
+                            <div class="order-info-item">
+                                <span class="order-info-label">Status</span>
+                                <span class="order-status status-{{ order.status }}">{{ order.get_status_display }}</span>
+                            </div>
+                            <div class="order-info-item">
+                                <span class="order-info-label">Total</span>
+                                <span class="order-info-value">${{ order.total }}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="order-items">
+                        {% for item in order.items.all %}
+                        <div class="order-item">
+                            {% if item.product and item.product.get_primary_image %}
+                                <img src="{{ item.product.get_primary_image.image.url }}"
+                                     alt="{{ item.product_name }}"
+                                     class="order-item-image">
+                            {% else %}
+                                <img src="{% static 'assets/img/shop/default.webp' %}"
+                                     alt="{{ item.product_name }}"
+                                     class="order-item-image">
+                            {% endif %}
+                            <div class="order-item-details">
+                                <div class="order-item-name">{{ item.product_name }}</div>
+                                {% if item.product_sku %}
+                                <div class="order-item-sku">SKU: {{ item.product_sku }}</div>
+                                {% endif %}
+                                <div class="order-item-quantity">Quantity: {{ item.quantity }}</div>
+                            </div>
+                            <div class="order-item-price">
+                                ${{ item.price }} × {{ item.quantity }} = ${{ item.total_price }}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="shipping-address">
+                        <h5>Shipping Address</h5>
+                        <p><strong>{% if order.first_name %}{{ order.first_name }} {% endif %}{{ order.last_name }}</strong></p>
+                        <p>{{ order.address }}</p>
+                        {% if order.apartment %}
+                        <p>{{ order.apartment }}</p>
+                        {% endif %}
+                        <p>{{ order.city }}, {{ order.postal_code }}</p>
+                        <p>{{ order.country }}</p>
+                    </div>
+
+                    <div class="order-footer">
+                        <div>
+                            <div class="order-date">
+                                <i class="ion-calendar"></i> Ordered on {{ order.created_at|date:"F d, Y" }}
+                            </div>
+                            <div class="order-date" style="margin-top: 5px;">
+                                <i class="ion-email"></i> {{ order.email }}
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 10px; align-items: center;">
+                            <div class="order-total">
+                                Total: <span>${{ order.total }}</span>
+                            </div>
+                            <a href="{% url 'cart:order_confirmation' order.order_number %}" class="btn-view-order">
+                                View Details
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="empty-orders">
+                    <div class="empty-orders-icon">
+                        <i class="ion-bag"></i>
+                    </div>
+                    <h3>No Orders Yet</h3>
+                    <p>You haven't placed any orders yet. Start shopping to see your orders here!</p>
+                    <a href="{% url 'shop:shop' %}" class="btn-shop-now">
+                        Start Shopping
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+

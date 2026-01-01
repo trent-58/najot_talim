@@ -1,0 +1,219 @@
+/*
+-----------------------------------------------------------------------
+	Form CSS
+-----------------------------------------------------------------------
+*/
+
+// Contact Form Style
+.contact-form {
+  .contact-form-wrapper {
+    .form-group {
+      margin-bottom: 20px;
+      .form-control {
+        background-color: transparent;
+        border: 1px solid #ebebeb;
+        border-radius: 3px;
+        color: $black-555;
+        font-size: 13px;
+        height: 45px;
+        padding: 10px;
+        @include placeholder {
+          color: $black-555;
+          font-size: 13px;
+        }
+        &:focus {
+          border-color: $theme-color3;
+          box-shadow: none;
+          outline: none;
+        }
+        &.textarea {
+          min-height: 200px;
+          padding: 10px;
+        }
+      }
+      .btn-theme {
+        margin-top: 35px;
+        border-radius: 3px;
+        font-size: 12px;
+        min-width: 45px;
+        padding: 14px 30px 13px;
+        &:hover {
+          background-color: $body-color;
+          border-color: $body-color;
+        }
+      }
+    }
+  }
+}
+
+.login-form {
+  background: #f9f9f9;
+  border: 1px solid #ebebeb;
+  border-radius: 5px;
+  box-shadow: 0 0 6px rgb(0 0 0 / 10%);
+  padding: 37px 40px 65px;
+  margin-top: 100px;
+  margin-bottom: 100px;
+  @media #{$lg-device} {
+    padding: 25px 10px 30px;
+  }
+  .login-form-wrapper {
+    .form-group {
+      .form-control {
+        background: #ffffff none repeat scroll 0 0;
+        border: 1px solid #ebebeb;
+        border-radius: 0;
+        box-shadow: none;
+        color: #333333;
+        font-size: 14px;
+        height: 40px;
+        margin-bottom: 20px;
+        padding-left: 10px;
+        width: 100%;
+      }
+    }
+    .btn-theme {
+      border-radius: 0;
+      border: none;
+      color: #fff;
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 1;
+      padding: 17px 0px;
+      text-align: center;
+      min-width: 115px;
+      &:hover {
+        background-color: $heading-color;
+      }
+    }
+    .btn-forgot {
+      color: $heading-color;
+      float: right;
+      font-size: 14px;
+      margin-top: 12px;
+      &:hover {
+        color: $theme-color;
+      }
+    }
+    .btn-create {
+      color: $heading-color;
+      display: inline-block;
+      margin-top: 17px;
+      font-size: 14px;
+      &:hover {
+        color: $theme-color;
+      }
+    }
+  }
+  .form-group-info {
+    margin-top: 20px;
+  }
+}
+
+// Comment Form Style
+.comment-form {
+  .comment-form-content {
+    .form-group {
+      margin-bottom: 21px;
+      position: relative;
+      z-index: 1;
+      .form-control {
+        background-color: #f7f7f7;
+        border: 1px solid #f7f7f7;
+        border-radius: 3px;
+        box-shadow: none;
+        color: #333;
+        font-size: 14px;
+        height: 60px;
+        padding: 2px 20px;
+        @include transition(.3s);
+        @include placeholder {
+          color: #333;
+          font-size: 14px;
+        }
+        &:focus {
+          border-color: #ddd;
+        }
+        &.textarea {
+          height: 215px;
+          margin-bottom: 45px;
+          padding: 25px 20px;
+        }
+      }
+      .btn-theme {
+        border-radius: 3px;
+        text-transform: uppercase;
+        font-size: 15px;
+        font-weight: 500;
+        padding: 14px 30px;
+        min-width: 172px;
+        &:hover {
+          background-color: $body-color;
+          border-color: $body-color;
+        }
+      }
+    }
+  }
+}
+
+.input-btn-group {
+  align-items: center;
+  border-radius: 0;
+  display: flex;
+  .form-control {
+    background-color: transparent;
+    border: 1px solid #cacaca;
+    border-radius: 0;
+    color: #868686;
+    font-size: 13px;
+    height: 60px;
+    padding-left: 20px;
+    @include placeholder {
+      color: #868686;
+      font-size: 13px;
+    }
+    &:focus {
+      box-shadow: none;
+    }
+  }
+  .btn-theme {
+    border-radius: 0;
+    font-size: 12px;
+    font-weight: 700;
+    height: 60px;
+    line-height: 60px;
+    min-width: 146.43px;
+    padding: 0;
+    text-transform: uppercase;
+    @media #{$xs-device} {
+      min-width: 100px;
+    }
+  }
+}
+
+.form-message {
+  overflow: hidden;
+  @include transition(.3s);
+  button {
+    &.btn-close {
+      border: none;
+      box-shadow: none;
+      background-color: transparent;
+      float: right;
+      font-size: 14px;
+      margin-top: 0;
+      text-indent: 1000px;
+    }
+  }
+}
+
+.form-control {
+  &:focus {
+    @include placeholder {
+      color: transparent;
+      opacity: 0;
+    }
+  }
+}
+

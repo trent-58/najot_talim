@@ -1,0 +1,184 @@
+{% extends "base.html" %}
+{% block title %}My Account{% endblock %}
+
+{% block content %}
+
+<style>
+    body {
+        background: #f5f7fc;
+    }
+
+    .account-wrapper {
+        display: flex;
+        justify-content: center;
+        padding: 50px 15px;
+    }
+
+    .account-card {
+        background: #fff;
+        max-width: 600px;
+        width: 100%;
+        padding: 40px;
+        border-radius: 14px;
+        box-shadow: 0 15px 45px rgba(0,0,0,0.08);
+    }
+
+    .account-card h2 {
+        text-align: center;
+        margin-bottom: 10px;
+        font-size: 26px;
+    }
+
+    .account-subtitle {
+        text-align: center;
+        font-size: 14px;
+        color: #777;
+        margin-bottom: 30px;
+    }
+
+    .profile-picture-section {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .profile-picture {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 4px solid #6c63ff;
+    }
+
+    .profile-placeholder {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        background: #e0e0e0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 48px;
+        color: #666;
+        border: 4px solid #6c63ff;
+    }
+
+    .profile-info {
+        margin-bottom: 20px;
+    }
+
+    .info-row {
+        display: flex;
+        padding: 15px 0;
+        border-bottom: 1px solid #eee;
+    }
+
+    .info-row:last-child {
+        border-bottom: none;
+    }
+
+    .info-label {
+        font-weight: 600;
+        color: #555;
+        width: 140px;
+        flex-shrink: 0;
+    }
+
+    .info-value {
+        color: #333;
+        flex: 1;
+    }
+
+    .info-value.empty {
+        color: #999;
+        font-style: italic;
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 10px;
+        margin-top: 30px;
+    }
+
+    .btn-action {
+        flex: 1;
+        padding: 12px;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+        text-align: center;
+    }
+
+    .btn-edit {
+        background: #6c63ff;
+        color: white;
+    }
+
+    .btn-edit:hover {
+        background: #574fe0;
+    }
+
+    .btn-delete {
+        background: #dc2626;
+        color: white;
+    }
+
+    .btn-delete:hover {
+        background: #b91c1c;
+    }
+</style>
+
+<div class="account-wrapper">
+    <div class="account-card">
+        <h2>My Account</h2>
+        <p class="account-subtitle">View your profile information</p>
+
+        <div class="profile-picture-section">
+            {% if user.profile_picture %}
+                <img src="{{ user.profile_picture.url }}" alt="Profile Picture" class="profile-picture">
+            {% else %}
+                <div class="profile-placeholder">
+                    {{ user.username.0|upper }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="profile-info">
+            <div class="info-row">
+                <div class="info-label">Username:</div>
+                <div class="info-value">{{ user.username }}</div>
+            </div>
+
+            <div class="info-row">
+                <div class="info-label">Full Name:</div>
+                <div class="info-value {% if not user.full_name %}empty{% endif %}">
+                    {{ user.full_name|default:"Not provided" }}
+                </div>
+            </div>
+
+            <div class="info-row">
+                <div class="info-label">Email:</div>
+                <div class="info-value {% if not user.email %}empty{% endif %}">
+                    {{ user.email|default:"Not provided" }}
+                </div>
+            </div>
+
+            <div class="info-row">
+                <div class="info-label">Phone:</div>
+                <div class="info-value {% if not user.phone %}empty{% endif %}">
+                    {{ user.phone|default:"Not provided" }}
+                </div>
+            </div>
+        </div>
+
+        <div class="action-buttons">
+            <a href="{% url 'user:orders' %}" class="btn-action btn-edit" style="background: #6c63ff;">View My Orders</a>
+            <a href="{% url 'user:edit' %}" class="btn-action btn-edit">Edit Profile</a>
+            <a href="{% url 'user:delete' %}" class="btn-action btn-delete">Delete Account</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
