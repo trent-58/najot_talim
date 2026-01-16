@@ -10,16 +10,11 @@ from .serializers import (
 
 
 class UserOwnedQuerysetMixin:
-    """Ensure objects are always scoped to request.user and user is set on create."""
-
     permission_classes = [IsAuthenticated]
-    model = None  # set in subclasses
-
-    # Populated by DRF GenericAPIView at runtime; declared here for type checkers/IDEs.
+    model = None
     request = None
 
     def get_queryset(self):
-        # Works for list + retrieve/update/destroy by limiting lookup to the user-owned subset.
         return self.model.objects.filter(user=self.request.user)
 
     def perform_create(self, serializer):
