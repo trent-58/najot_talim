@@ -26,7 +26,6 @@ class ExpenseListCreateView(generics.ListCreateAPIView):
         if category and category.user != self.request.user:
             raise PermissionDenied("Category does not belong to you")
 
-        # subtract balance
         account.balance -= amount
         account.save(update_fields=["balance"])
 
@@ -52,7 +51,6 @@ class IncomeListCreateView(generics.ListCreateAPIView):
         if category and category.user != self.request.user:
             raise PermissionDenied("Category does not belong to you")
 
-        # add balance
         account.balance += amount
         account.save(update_fields=["balance"])
 

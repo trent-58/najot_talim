@@ -11,13 +11,10 @@ class UserAdmin(admin.ModelAdmin):
     list_filter = ("language",)
     ordering = ("-date_joined",)
 
-    # Each entry must be (name, dict). The dict must contain a "fields" key.
     fieldsets = (
         ("Basic Info", {"fields": ("first_name", "last_name", "username", "password")}),
         ("Preferences", {"fields": ("language", "email")}),
 
     )
 
-
-# Optional: remove Group from admin UI
 admin.site.unregister(Group)

@@ -15,7 +15,6 @@ from .serializers import (
 @permission_classes([permissions.IsAuthenticated])
 def me_view(request):
     if request.method == "DELETE":
-        # delete account + revoke token
         try:
             request.user.auth_token.delete()
         except Exception:
@@ -27,7 +26,6 @@ def me_view(request):
         serializer = UserSerializer(request.user, context={"request": request})
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    # PATCH
     serializer = UserSerializer(
         request.user,
         data=request.data,
@@ -42,7 +40,6 @@ def me_view(request):
 @api_view(["POST"])
 @permission_classes([permissions.AllowAny])
 def register_view(request):
-    # require password here
     password = request.data.get("password")
     if not password or len(password) < 8:
         return Response(
@@ -103,7 +100,6 @@ def change_password_view(request):
     request.user.set_password(new_password)
     request.user.save()
 
-    # revoke token so user must login again
     try:
         request.user.auth_token.delete()
     except Exception:
