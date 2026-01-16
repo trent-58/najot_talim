@@ -1,4 +1,3 @@
-// Accounts.jsx
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../axios";
@@ -7,28 +6,32 @@ export default function Accounts() {
   const navigate = useNavigate();
 
   const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  const [open, setOpen] = useState(false);
-  const [mode, setMode] = useState("create"); // create | edit
+  const [modalOpen, setModalOpen] = useState(false);
+  const [mode, setMode] = useState("create");
   const [activeId, setActiveId] = useState(null);
 
   const [form, setForm] = useState({
     name: "",
-    type: "cash",
+    type: "CASH",
     currency: "USD",
     balance: "0",
-    status: "active",
+    status: "ACTIVE",
   });
 
   const load = async () => {
     setError("");
+    setLoading(true);
     try {
       const res = await api.get("/accounts/accounts/");
-      setItems(res.data);
+      setItems(res.data || []);
     } catch {
       localStorage.removeItem("auth_token");
       navigate("/login");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -42,23 +45,25 @@ export default function Accounts() {
   );
 
   const openCreate = () => {
+    setError("");
     setMode("create");
     setActiveId(null);
-    setForm({ name: "", type: "cash", currency: "USD", balance: "0", status: "active" });
-    setOpen(true);
+    setForm({ name: "", type: "CASH", currency: "USD", balance: "0", status: "ACTIVE" });
+    setModalOpen(true);
   };
 
   const openEdit = (acc) => {
+    setError("");
     setMode("edit");
     setActiveId(acc.id);
     setForm({
       name: acc.name || "",
-      type: acc.type || "cash",
+      type: (acc.type || "CASH").toUpperCase(),
       currency: acc.currency || "USD",
       balance: String(acc.balance ?? "0"),
-      status: acc.status || "active",
+      status: (acc.status || "ACTIVE").toUpperCase(),
     });
-    setOpen(true);
+    setModalOpen(true);
   };
 
   const submit = async (e) => {
@@ -66,8 +71,11 @@ export default function Accounts() {
     setError("");
 
     const payload = {
-      ...form,
+      name: form.name,
+      type: String(form.type || "CASH").toUpperCase(),
+      currency: form.currency,
       balance: Number(form.balance || 0),
+      status: String(form.status || "ACTIVE").toUpperCase(),
     };
 
     try {
@@ -76,20 +84,27 @@ export default function Accounts() {
       } else {
         await api.patch(`/accounts/accounts/${activeId}/`, payload);
       }
-      setOpen(false);
+      setModalOpen(false);
       await load();
     } catch (err) {
-      setError(err.response?.data?.detail || "Save failed");
+      const data = err.response?.data;
+      const msg = data?.detail || data?.name?.[0] || "Save failed.";
+      setError(msg);
     }
   };
 
   const remove = async (id) => {
     setError("");
+    const ok = window.confirm("Delete this account?");
+    if (!ok) return;
+
     try {
       await api.delete(`/accounts/accounts/${id}/`);
       await load();
     } catch (err) {
-      setError(err.response?.data?.detail || "Delete failed");
+      const data = err.response?.data;
+      const msg = data?.detail || "Delete failed.";
+      setError(msg);
     }
   };
 
@@ -98,11 +113,13 @@ export default function Accounts() {
       <div className="page-head">
         <div>
           <h1>Accounts</h1>
-          <p className="muted">Total balance: <strong>{totalBalance}</strong></p>
+          <p className="muted">
+            Total balance: <strong>{totalBalance}</strong>
+          </p>
         </div>
 
         <div className="toolbar">
-          <button className="btn btn-primary" type="button" onClick={openCreate}>
+          <button type="button" className="btn btn-primary" onClick={openCreate}>
             + Add account
           </button>
         </div>
@@ -110,57 +127,63 @@ export default function Accounts() {
 
       {error && <p className="page-error">{error}</p>}
 
-      <div className="card">
-        {items.length === 0 ? (
-          <p>No accounts yet. Add one.</p>
-        ) : (
-          <div className="table">
-            <div className="table-head">
-              <div>Name</div>
-              <div>Type</div>
-              <div>Currency</div>
-              <div className="right">Balance</div>
-              <div className="right">Actions</div>
-            </div>
-
-            {items.map((a) => (
-              <div className="table-row" key={a.id}>
-                <div className="strong">{a.name}</div>
-                <div className="muted">{a.type}</div>
-                <div className="muted">{a.currency}</div>
-                <div className="right strong">{a.balance}</div>
-                <div className="right actions">
-                  <button className="btn btn-ghost" type="button" onClick={() => openEdit(a)}>
-                    Edit
-                  </button>
-                  <button className="btn btn-danger" type="button" onClick={() => remove(a.id)}>
-                    Delete
-                  </button>
-                </div>
+      {loading ? (
+        <div className="card">
+          <p>Loading…</p>
+        </div>
+      ) : (
+        <div className="card">
+          {items.length === 0 ? (
+            <p>No accounts yet.</p>
+          ) : (
+            <div className="table">
+              <div className="table-head">
+                <div>Name</div>
+                <div>Type</div>
+                <div>Currency</div>
+                <div className="right">Balance</div>
+                <div className="right">Actions</div>
               </div>
-            ))}
-          </div>
-        )}
-      </div>
 
-      {open && (
+              {items.map((a) => (
+                <div className="table-row" key={a.id}>
+                  <div className="strong">{a.name}</div>
+                  <div className="muted">{a.type}</div>
+                  <div className="muted">{a.currency}</div>
+                  <div className="right strong">{a.balance}</div>
+                  <div className="right actions">
+                    <button type="button" className="btn btn-ghost" onClick={() => openEdit(a)}>
+                      Edit
+                    </button>
+                    <button type="button" className="btn btn-danger" onClick={() => remove(a.id)}>
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
+      {modalOpen && (
         <div className="modal">
           <div className="modal-box">
             <div className="modal-head">
               <h3 className="modal-title">{mode === "create" ? "Add account" : "Edit account"}</h3>
-              <button className="btn btn-ghost" type="button" onClick={() => setOpen(false)}>
+              <button type="button" className="btn btn-ghost" onClick={() => setModalOpen(false)}>
                 ✕
               </button>
             </div>
 
             <form onSubmit={submit}>
               <div className="form-group">
-                <label className="form-label">Account name</label>
+                <label className="form-label">Name</label>
                 <input
                   className="form-input"
-                  placeholder="e.g. Cash, Bank, Card"
+                  placeholder="e.g. Cash, Card"
                   value={form.name}
-                  onChange={(e) => setForm({ ...form, name: e.target.value })}
+                  onChange={(e) => setForm((p) => ({ ...p, name: e.target.value }))}
                   required
                 />
               </div>
@@ -171,12 +194,13 @@ export default function Accounts() {
                   <select
                     className="form-input"
                     value={form.type}
-                    onChange={(e) => setForm({ ...form, type: e.target.value })}
+                    onChange={(e) => setForm((p) => ({ ...p, type: e.target.value }))}
                   >
-                    <option value="cash">Cash</option>
-                    <option value="bank">Bank</option>
-                    <option value="card">Card</option>
-                    <option value="wallet">Wallet</option>
+                    <option value="CASH">Cash</option>
+                    <option value="CARD">Card</option>
+                    <option value="BANK">Bank</option>
+                    <option value="WALLET">Wallet</option>
+                    <option value="CURRENCY">Currency</option>
                   </select>
                 </div>
 
@@ -185,7 +209,7 @@ export default function Accounts() {
                   <select
                     className="form-input"
                     value={form.currency}
-                    onChange={(e) => setForm({ ...form, currency: e.target.value })}
+                    onChange={(e) => setForm((p) => ({ ...p, currency: e.target.value }))}
                   >
                     <option value="USD">USD</option>
                     <option value="UZS">UZS</option>
@@ -204,7 +228,7 @@ export default function Accounts() {
                     step="0.01"
                     placeholder="0"
                     value={form.balance}
-                    onChange={(e) => setForm({ ...form, balance: e.target.value })}
+                    onChange={(e) => setForm((p) => ({ ...p, balance: e.target.value }))}
                   />
                 </div>
 
@@ -213,19 +237,20 @@ export default function Accounts() {
                   <select
                     className="form-input"
                     value={form.status}
-                    onChange={(e) => setForm({ ...form, status: e.target.value })}
+                    onChange={(e) => setForm((p) => ({ ...p, status: e.target.value }))}
                   >
-                    <option value="active">Active</option>
-                    <option value="archived">Archived</option>
+                    <option value="ACTIVE">Active</option>
+                    <option value="INACTIVE">Inactive</option>
+                    <option value="ARCHIVED">Archived</option>
                   </select>
                 </div>
               </div>
 
               <div className="modal-actions">
-                <button className="btn btn-primary" type="submit">
+                <button type="submit" className="btn btn-primary">
                   Save
                 </button>
-                <button className="btn btn-secondary" type="button" onClick={() => setOpen(false)}>
+                <button type="button" className="btn btn-secondary" onClick={() => setModalOpen(false)}>
                   Cancel
                 </button>
               </div>
@@ -236,7 +261,3 @@ export default function Accounts() {
     </div>
   );
 }
-
-
-
-

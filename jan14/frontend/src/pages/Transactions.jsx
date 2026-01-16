@@ -6,6 +6,7 @@ import api from "../axios";
 export default function Transactions() {
   const navigate = useNavigate();
 
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   const [accounts, setAccounts] = useState([]);
@@ -15,22 +16,29 @@ export default function Transactions() {
   const [expenses, setExpenses] = useState([]);
   const [incomes, setIncomes] = useState([]);
 
-  const [tab, setTab] = useState("expenses"); // expenses | incomes
+  const [viewMode, setViewMode] = useState("all");
+  const [categoryFilter, setCategoryFilter] = useState("");
+  const [duration, setDuration] = useState("all");
 
-  const [open, setOpen] = useState(false);
-  const [mode, setMode] = useState("create"); // create | edit
-  const [kind, setKind] = useState("expense"); // expense | income
+  const [txModalOpen, setTxModalOpen] = useState(false);
+  const [txMode, setTxMode] = useState("create");
+  const [txType, setTxType] = useState("expense");
   const [activeId, setActiveId] = useState(null);
 
-  const [form, setForm] = useState({
+  const [txForm, setTxForm] = useState({
     account: "",
     category: "",
     amount: "",
     note: "",
   });
 
-  const load = async () => {
+  const [catModalOpen, setCatModalOpen] = useState(false);
+  const [catType, setCatType] = useState("expense");
+  const [catForm, setCatForm] = useState({ name: "", icon: "" });
+
+  const loadAll = async () => {
     setError("");
+    setLoading(true);
     try {
       const [a, ec, ic, e, i] = await Promise.all([
         api.get("/accounts/accounts/"),
@@ -39,113 +47,267 @@ export default function Transactions() {
         api.get("/finance/expenses/"),
         api.get("/finance/incomes/"),
       ]);
-
-      setAccounts(a.data);
-      setExpenseCats(ec.data);
-      setIncomeCats(ic.data);
-      setExpenses(e.data);
-      setIncomes(i.data);
+      setAccounts(a.data || []);
+      setExpenseCats(ec.data || []);
+      setIncomeCats(ic.data || []);
+      setExpenses(e.data || []);
+      setIncomes(i.data || []);
     } catch {
       localStorage.removeItem("auth_token");
       navigate("/login");
+    } finally {
+      setLoading(false);
     }
   };
 
+  const loadCategories = async () => {
+    try {
+      const [ec, ic] = await Promise.all([
+        api.get("/accounts/expense-categories/"),
+        api.get("/accounts/income-categories/"),
+      ]);
+      setExpenseCats(ec.data || []);
+      setIncomeCats(ic.data || []);
+    } catch {}
+  };
+
   useEffect(() => {
-    load();
+    loadAll();
   }, []);
 
-  const accountName = useMemo(() => {
-    const map = new Map(accounts.map((a) => [a.id, a.name]));
-    return (id) => map.get(id) || "—";
-  }, [accounts]);
+  const accountMap = useMemo(() => new Map(accounts.map((a) => [a.id, a])), [accounts]);
+  const expenseCatMap = useMemo(() => new Map(expenseCats.map((c) => [c.id, c])), [expenseCats]);
+  const incomeCatMap = useMemo(() => new Map(incomeCats.map((c) => [c.id, c])), [incomeCats]);
 
-  const expenseCatName = useMemo(() => {
-    const map = new Map(expenseCats.map((c) => [c.id, c.name]));
-    return (id) => map.get(id) || "—";
-  }, [expenseCats]);
+  const merged = useMemo(() => {
+    const ex = (expenses || []).map((x) => ({ ...x, tx_type: "expense" }));
+    const inc = (incomes || []).map((x) => ({ ...x, tx_type: "income" }));
+    return [...ex, ...inc].sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+  }, [expenses, incomes]);
 
-  const incomeCatName = useMemo(() => {
-    const map = new Map(incomeCats.map((c) => [c.id, c.name]));
-    return (id) => map.get(id) || "—";
-  }, [incomeCats]);
+  const inRange = (iso) => {
+    if (duration === "all") return true;
 
-  const openCreate = (k) => {
+    const d = new Date(iso);
+    const now = new Date();
+
+    const startOfDay = (x) => new Date(x.getFullYear(), x.getMonth(), x.getDate());
+    const startOfWeekMon = (x) => {
+      const day = x.getDay();
+      const diff = day === 0 ? -6 : 1 - day;
+      const y = new Date(x);
+      y.setDate(y.getDate() + diff);
+      return startOfDay(y);
+    };
+    const addMonths = (x, m) => {
+      const y = new Date(x);
+      y.setMonth(y.getMonth() + m);
+      return y;
+    };
+
+    const todayStart = startOfDay(now);
+
+    if (duration === "today") return d >= todayStart;
+    if (duration === "week") return d >= startOfWeekMon(now);
+    if (duration === "month") return d >= new Date(now.getFullYear(), now.getMonth(), 1);
+    if (duration === "3m") return d >= addMonths(todayStart, -3);
+    if (duration === "6m") return d >= addMonths(todayStart, -6);
+    if (duration === "year") return d >= new Date(now.getFullYear(), 0, 1);
+
+    return true;
+  };
+
+  const filtered = useMemo(() => {
+    let list = merged;
+
+    list = list.filter((t) => inRange(t.created_at));
+
+    if (viewMode !== "all") {
+      list = list.filter((t) => t.tx_type === viewMode);
+    }
+
+    if (!categoryFilter) return list;
+
+    if (categoryFilter === "none") {
+      return list.filter((t) => t.category == null);
+    }
+
+    const [t, idStr] = categoryFilter.split(":");
+    const id = Number(idStr);
+    return list.filter((x) => x.tx_type === t && Number(x.category) === id);
+  }, [merged, viewMode, categoryFilter, duration]);
+
+  const txCategoryLabel = (tx) => {
+    if (tx.category == null) return "No category";
+    if (tx.tx_type === "expense") return expenseCatMap.get(tx.category)?.name || "—";
+    return incomeCatMap.get(tx.category)?.name || "—";
+  };
+
+  const txAccountLabel = (tx) => {
+    const a = accountMap.get(tx.account);
+    return a ? `${a.name} (${a.currency})` : "—";
+  };
+
+  const openCreate = () => {
     setError("");
-    setKind(k);
-    setMode("create");
+    setTxMode("create");
     setActiveId(null);
 
     const firstAccount = accounts[0]?.id || "";
-    const firstCat =
-      k === "expense" ? (expenseCats[0]?.id || "") : (incomeCats[0]?.id || "");
+    const firstExpenseCat = expenseCats[0]?.id || "";
+    const firstIncomeCat = incomeCats[0]?.id || "";
 
-    setForm({
+    setTxType("expense");
+    setTxForm({
       account: firstAccount,
-      category: firstCat,
+      category: firstExpenseCat,
       amount: "",
       note: "",
     });
 
-    setOpen(true);
+    if (!firstAccount) {
+      setError("Create an account first.");
+      return;
+    }
+
+    setTxModalOpen(true);
   };
 
-  const openEdit = (k, item) => {
+  const openEdit = (tx) => {
     setError("");
-    setKind(k);
-    setMode("edit");
-    setActiveId(item.id);
-
-    setForm({
-      account: item.account || "",
-      category: item.category || "",
-      amount: String(item.amount ?? ""),
-      note: item.note || "",
+    setTxMode("edit");
+    setTxType(tx.tx_type);
+    setActiveId(tx.id);
+    setTxForm({
+      account: tx.account ?? "",
+      category: tx.category ?? "",
+      amount: String(tx.amount ?? ""),
+      note: tx.note ?? "",
     });
-
-    setOpen(true);
+    setTxModalOpen(true);
   };
 
-  const submit = async (e) => {
+  const onSwitchTxType = (nextType) => {
+    if (txMode === "edit") return;
+    setTxType(nextType);
+
+    const firstExpenseCat = expenseCats[0]?.id || "";
+    const firstIncomeCat = incomeCats[0]?.id || "";
+    setTxForm((p) => ({
+      ...p,
+      category: nextType === "expense" ? firstExpenseCat : firstIncomeCat,
+    }));
+  };
+
+  const submitTx = async (e) => {
     e.preventDefault();
     setError("");
 
-    if (!form.account) {
-      setError("Select an account");
+    if (!txForm.account) {
+      setError("Select an account.");
+      return;
+    }
+    if (!txForm.amount) {
+      setError("Amount is required.");
       return;
     }
 
     const payload = {
-      account: Number(form.account),
-      category: form.category ? Number(form.category) : null,
-      amount: Number(form.amount),
-      note: form.note,
+      account: Number(txForm.account),
+      category: txForm.category ? Number(txForm.category) : null,
+      amount: Number(txForm.amount),
+      note: txForm.note || "",
     };
 
     try {
-      if (kind === "expense") {
-        if (mode === "create") await api.post("/finance/expenses/", payload);
-        else await api.patch(`/finance/expenses/${activeId}/`, payload);
+      if (txType === "expense") {
+        if (txMode === "create") {
+          await api.post("/finance/expenses/", payload);
+        } else {
+          await api.patch(`/finance/expenses/${activeId}/`, payload);
+        }
       } else {
-        if (mode === "create") await api.post("/finance/incomes/", payload);
-        else await api.patch(`/finance/incomes/${activeId}/`, payload);
+        if (txMode === "create") {
+          await api.post("/finance/incomes/", payload);
+        } else {
+          await api.patch(`/finance/incomes/${activeId}/`, payload);
+        }
       }
 
-      setOpen(false);
-      await load();
+      setTxModalOpen(false);
+      await loadAll();
     } catch (err) {
-      setError(err.response?.data?.detail || "Save failed");
+      const data = err.response?.data;
+      if (typeof data === "string") setError(data);
+      else if (data?.detail) setError(data.detail);
+      else setError("Save failed.");
     }
   };
 
-  const remove = async (k, id) => {
+  const deleteTx = async (tx) => {
     setError("");
+    const ok = window.confirm("Delete this transaction?");
+    if (!ok) return;
+
     try {
-      if (k === "expense") await api.delete(`/finance/expenses/${id}/`);
-      else await api.delete(`/finance/incomes/${id}/`);
-      await load();
+      if (tx.tx_type === "expense") {
+        await api.delete(`/finance/expenses/${tx.id}/`);
+      } else {
+        await api.delete(`/finance/incomes/${tx.id}/`);
+      }
+      await loadAll();
     } catch (err) {
-      setError(err.response?.data?.detail || "Delete failed");
+      const data = err.response?.data;
+      if (data?.detail) setError(data.detail);
+      else setError("Delete failed.");
+    }
+  };
+
+  const openAddCategoryExpense = () => {
+    setError("");
+    setCatType("expense");
+    setCatForm({ name: "", icon: "" });
+    setCatModalOpen(true);
+  };
+
+  const openAddCategoryIncome = () => {
+    setError("");
+    setCatType("income");
+    setCatForm({ name: "", icon: "" });
+    setCatModalOpen(true);
+  };
+
+  const submitCategory = async (e) => {
+    e.preventDefault();
+    setError("");
+
+    const name = (catForm.name || "").trim();
+    const icon = (catForm.icon || "").trim();
+    if (!name) {
+      setError("Category name is required.");
+      return;
+    }
+
+    try {
+      if (catType === "expense") {
+        const res = await api.post("/accounts/expense-categories/", {
+          name,
+          ...(icon ? { icon } : {}),
+        });
+        await loadCategories();
+        setTxType("expense");
+        setTxForm((p) => ({ ...p, category: res.data?.id || "" }));
+      } else {
+        const res = await api.post("/accounts/income-categories/", { name });
+        await loadCategories();
+        setTxType("income");
+        setTxForm((p) => ({ ...p, category: res.data?.id || "" }));
+      }
+      setCatModalOpen(false);
+    } catch (err) {
+      const data = err.response?.data;
+      const msg = data?.name?.[0] || data?.detail || "Failed to create category.";
+      setError(msg);
     }
   };
 
@@ -154,127 +316,175 @@ export default function Transactions() {
       <div className="page-head">
         <div>
           <h1>Transactions</h1>
-          <p className="muted">Add, edit, and delete your incomes and expenses.</p>
+          <p className="muted">Merged list + filters + add/edit/delete + category popup.</p>
         </div>
 
         <div className="toolbar">
-          <button
-            className={`btn ${tab === "expenses" ? "btn-primary" : "btn-ghost"}`}
-            type="button"
-            onClick={() => setTab("expenses")}
+          <div className="btn-group">
+            <button
+              type="button"
+              className={`btn ${viewMode === "all" ? "btn-primary" : "btn-ghost"}`}
+              onClick={() => setViewMode("all")}
+            >
+              All
+            </button>
+            <button
+              type="button"
+              className={`btn ${viewMode === "expense" ? "btn-danger" : "btn-ghost"}`}
+              onClick={() => setViewMode("expense")}
+            >
+              Expenses
+            </button>
+            <button
+              type="button"
+              className={`btn ${viewMode === "income" ? "btn-primary" : "btn-ghost"}`}
+              onClick={() => setViewMode("income")}
+            >
+              Incomes
+            </button>
+          </div>
+
+          <select
+            className="form-input select-compact"
+            value={duration}
+            onChange={(e) => setDuration(e.target.value)}
           >
-            Expenses
+            <option value="all">All time</option>
+            <option value="today">Today</option>
+            <option value="week">This week</option>
+            <option value="month">This month</option>
+            <option value="3m">Last 3 months</option>
+            <option value="6m">Last 6 months</option>
+            <option value="year">This year</option>
+          </select>
+
+          <select
+            className="form-input select-compact"
+            value={categoryFilter}
+            onChange={(e) => setCategoryFilter(e.target.value)}
+          >
+            <option value="">All categories</option>
+            <option value="none">No category</option>
+            <optgroup label="Expense categories">
+              {expenseCats.map((c) => (
+                <option key={`e-${c.id}`} value={`expense:${c.id}`}>
+                  {c.name}
+                </option>
+              ))}
+            </optgroup>
+            <optgroup label="Income categories">
+              {incomeCats.map((c) => (
+                <option key={`i-${c.id}`} value={`income:${c.id}`}>
+                  {c.name}
+                </option>
+              ))}
+            </optgroup>
+          </select>
+
+          <button type="button" className="btn btn-ghost" onClick={openAddCategoryExpense}>
+            + Expense Category
+          </button>
+          <button type="button" className="btn btn-ghost" onClick={openAddCategoryIncome}>
+            + Income Category
           </button>
 
-          <button
-            className={`btn ${tab === "incomes" ? "btn-primary" : "btn-ghost"}`}
-            type="button"
-            onClick={() => setTab("incomes")}
-          >
-            Incomes
-          </button>
-
-          <button
-            className={tab === "expenses" ? "btn btn-danger" : "btn btn-primary"}
-            type="button"
-            onClick={() => openCreate(tab === "expenses" ? "expense" : "income")}
-          >
-            + Add {tab === "expenses" ? "expense" : "income"}
+          <button type="button" className="btn btn-primary" onClick={openCreate}>
+            + Transaction
           </button>
         </div>
       </div>
 
       {error && <p className="page-error">{error}</p>}
 
-      {accounts.length === 0 ? (
-        <div className="card">
-          <p>You need at least one account before creating transactions.</p>
-        </div>
-      ) : (
-        <div className="card">
-          {tab === "expenses" ? (
-            expenses.length === 0 ? (
-              <p>No expenses yet.</p>
-            ) : (
-              <div className="table">
-                <div className="table-head">
-                  <div>Category</div>
-                  <div>Account</div>
-                  <div>Note</div>
-                  <div className="right">Amount</div>
-                  <div className="right">Actions</div>
-                </div>
-
-                {expenses.map((x) => (
-                  <div className="table-row" key={`e-${x.id}`}>
-                    <div className="strong">{expenseCatName(x.category)}</div>
-                    <div className="muted">{accountName(x.account)}</div>
-                    <div className="muted">{x.note || "—"}</div>
-                    <div className="right strong negative">-{x.amount}</div>
-                    <div className="right actions">
-                      <button className="btn btn-ghost" type="button" onClick={() => openEdit("expense", x)}>
-                        Edit
-                      </button>
-                      <button className="btn btn-danger" type="button" onClick={() => remove("expense", x.id)}>
-                        Delete
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )
-          ) : incomes.length === 0 ? (
-            <p>No incomes yet.</p>
-          ) : (
-            <div className="table">
-              <div className="table-head">
-                <div>Category</div>
-                <div>Account</div>
-                <div>Note</div>
-                <div className="right">Amount</div>
-                <div className="right">Actions</div>
-              </div>
-
-              {incomes.map((x) => (
-                <div className="table-row" key={`i-${x.id}`}>
-                  <div className="strong">{incomeCatName(x.category)}</div>
-                  <div className="muted">{accountName(x.account)}</div>
-                  <div className="muted">{x.note || "—"}</div>
-                  <div className="right strong positive">+{x.amount}</div>
-                  <div className="right actions">
-                    <button className="btn btn-ghost" type="button" onClick={() => openEdit("income", x)}>
-                      Edit
-                    </button>
-                    <button className="btn btn-danger" type="button" onClick={() => remove("income", x.id)}>
-                      Delete
-                    </button>
-                  </div>
-                </div>
-              ))}
+      <div className="card">
+        {loading ? (
+          <p>Loading…</p>
+        ) : filtered.length === 0 ? (
+          <p>No transactions.</p>
+        ) : (
+          <div className="table">
+            <div className="table-head tx-grid">
+              <div>Type</div>
+              <div>Category</div>
+              <div>Account</div>
+              <div>Note</div>
+              <div>Date</div>
+              <div className="right">Amount</div>
+              <div className="right">Actions</div>
             </div>
-          )}
-        </div>
-      )}
 
-      {open && (
+            {filtered.map((tx) => (
+              <div className="table-row tx-grid" key={`${tx.tx_type}-${tx.id}`}>
+                <div className="strong">{tx.tx_type === "income" ? "Income" : "Expense"}</div>
+                <div className="muted">{txCategoryLabel(tx)}</div>
+                <div className="muted">{txAccountLabel(tx)}</div>
+                <div className="muted">{tx.note || "—"}</div>
+                <div className="muted">{tx.created_at ? new Date(tx.created_at).toLocaleString() : "—"}</div>
+                <div className={`right strong ${tx.tx_type === "income" ? "positive" : "negative"}`}>
+                  {tx.tx_type === "income" ? `+${tx.amount}` : `-${tx.amount}`}
+                </div>
+                <div className="right actions">
+                  <button type="button" className="btn btn-sm btn-ghost" onClick={() => openEdit(tx)}>
+                    Edit
+                  </button>
+                  <button type="button" className="btn btn-sm btn-danger" onClick={() => deleteTx(tx)}>
+                    Delete
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {txModalOpen && (
         <div className="modal">
           <div className="modal-box">
             <div className="modal-head">
-              <h3 className="modal-title">
-                {mode === "create" ? "Add" : "Edit"} {kind === "expense" ? "Expense" : "Income"}
-              </h3>
-              <button className="btn btn-ghost" type="button" onClick={() => setOpen(false)}>
+              <h3 className="modal-title">{txMode === "create" ? "Add Transaction" : "Edit Transaction"}</h3>
+              <button type="button" className="btn btn-sm btn-ghost" onClick={() => setTxModalOpen(false)}>
                 ✕
               </button>
             </div>
 
-            <form onSubmit={submit}>
+            <div className="toolbar" style={{ marginBottom: "0.75rem" }}>
+              <button
+                type="button"
+                className={`btn ${txType === "expense" ? "btn-danger" : "btn-ghost"}`}
+                disabled={txMode === "edit"}
+                onClick={() => onSwitchTxType("expense")}
+              >
+                Expense
+              </button>
+              <button
+                type="button"
+                className={`btn ${txType === "income" ? "btn-primary" : "btn-ghost"}`}
+                disabled={txMode === "edit"}
+                onClick={() => onSwitchTxType("income")}
+              >
+                Income
+              </button>
+
+              <div style={{ flex: 1 }} />
+
+              {txType === "expense" ? (
+                <button type="button" className="btn btn-ghost" onClick={openAddCategoryExpense}>
+                  + Add Expense Category
+                </button>
+              ) : (
+                <button type="button" className="btn btn-ghost" onClick={openAddCategoryIncome}>
+                  + Add Income Category
+                </button>
+              )}
+            </div>
+
+            <form onSubmit={submitTx}>
               <div className="form-group">
                 <label className="form-label">Account</label>
                 <select
                   className="form-input"
-                  value={form.account}
-                  onChange={(e) => setForm({ ...form, account: e.target.value })}
+                  value={txForm.account}
+                  onChange={(e) => setTxForm((p) => ({ ...p, account: e.target.value }))}
                   required
                 >
                   {accounts.map((a) => (
@@ -289,18 +499,15 @@ export default function Transactions() {
                 <label className="form-label">Category</label>
                 <select
                   className="form-input"
-                  value={form.category}
-                  onChange={(e) => setForm({ ...form, category: e.target.value })}
+                  value={txForm.category ?? ""}
+                  onChange={(e) => setTxForm((p) => ({ ...p, category: e.target.value }))}
                 >
-                  {(kind === "expense" ? expenseCats : incomeCats).length === 0 ? (
-                    <option value="">No categories</option>
-                  ) : (
-                    (kind === "expense" ? expenseCats : incomeCats).map((c) => (
-                      <option key={c.id} value={c.id}>
-                        {c.name}
-                      </option>
-                    ))
-                  )}
+                  <option value="">No category</option>
+                  {(txType === "expense" ? expenseCats : incomeCats).map((c) => (
+                    <option key={c.id} value={c.id}>
+                      {c.name}
+                    </option>
+                  ))}
                 </select>
               </div>
 
@@ -312,8 +519,8 @@ export default function Transactions() {
                     type="number"
                     step="0.01"
                     placeholder="0"
-                    value={form.amount}
-                    onChange={(e) => setForm({ ...form, amount: e.target.value })}
+                    value={txForm.amount}
+                    onChange={(e) => setTxForm((p) => ({ ...p, amount: e.target.value }))}
                     required
                   />
                 </div>
@@ -323,17 +530,64 @@ export default function Transactions() {
                   <input
                     className="form-input"
                     placeholder="Optional"
-                    value={form.note}
-                    onChange={(e) => setForm({ ...form, note: e.target.value })}
+                    value={txForm.note}
+                    onChange={(e) => setTxForm((p) => ({ ...p, note: e.target.value }))}
                   />
                 </div>
               </div>
 
               <div className="modal-actions">
-                <button className={`btn ${kind === "expense" ? "btn-danger" : "btn-primary"}`} type="submit">
+                <button type="submit" className={`btn ${txType === "expense" ? "btn-danger" : "btn-primary"}`}>
                   Save
                 </button>
-                <button className="btn btn-secondary" type="button" onClick={() => setOpen(false)}>
+                <button type="button" className="btn btn-secondary" onClick={() => setTxModalOpen(false)}>
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {catModalOpen && (
+        <div className="modal">
+          <div className="modal-box">
+            <div className="modal-head">
+              <h3 className="modal-title">{catType === "expense" ? "Add Expense Category" : "Add Income Category"}</h3>
+              <button type="button" className="btn btn-sm btn-ghost" onClick={() => setCatModalOpen(false)}>
+                ✕
+              </button>
+            </div>
+
+            <form onSubmit={submitCategory}>
+              <div className="form-group">
+                <label className="form-label">Name</label>
+                <input
+                  className="form-input"
+                  placeholder={catType === "expense" ? "e.g. Food, Transport" : "e.g. Salary, Bonus"}
+                  value={catForm.name}
+                  onChange={(e) => setCatForm((p) => ({ ...p, name: e.target.value }))}
+                  required
+                />
+              </div>
+
+              {catType === "expense" && (
+                <div className="form-group">
+                  <label className="form-label">Icon (optional)</label>
+                  <input
+                    className="form-input"
+                    placeholder="e.g. 🍔"
+                    value={catForm.icon}
+                    onChange={(e) => setCatForm((p) => ({ ...p, icon: e.target.value }))}
+                  />
+                </div>
+              )}
+
+              <div className="modal-actions">
+                <button type="submit" className="btn btn-primary">
+                  Create
+                </button>
+                <button type="button" className="btn btn-secondary" onClick={() => setCatModalOpen(false)}>
                   Cancel
                 </button>
               </div>
@@ -344,6 +598,7 @@ export default function Transactions() {
     </div>
   );
 }
+
 
 
 
