@@ -180,6 +180,76 @@ class GetNewCodeSerializer(serializers.Serializer):
         return user
 
 
+class ForgotPasswordSerializer(serializers.Serializer):
+    userinput = serializers.CharField(write_only=True)
+
+    def validate(self, attrs):
+        userinput = attrs.get("userinput", "").strip()
+        auth_type = check_if_email_or_phone(userinput)
+
+        if auth_type not in (VIA_PHONE, VIA_EMAIL):
+            raise ValidationError("Email or phone number required")
+
+        if auth_type == VIA_PHONE:
+            user = CustomUser.objects.filter(phone_number=userinput).first()
+        else:
+            user = CustomUser.objects.filter(email=userinput).first()
+
+        if not user:
+            raise ValidationError("User not found")
+
+        attrs["user"] = user
+        attrs["auth_type"] = auth_type
+        return attrs
+
+    def create(self, validated_data):
+        user = validated_data["user"]
+        auth_type = validated_data["auth_type"]
+
+        code = user.create_code_verification(auth_type)
+        if auth_type == VIA_EMAIL:
+            send_mail(
+                subject="Code",
+                message=f"Code: {code}",
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[user.email],
+            )
+        else:
+            print(code)
+        return user
+
+
+class ResetPasswordSerializer(serializers.Serializer):
+    old_password = serializers.CharField(write_only=True)
+    new_password = serializers.CharField(write_only=True)
+    new_password_confirm = serializers.CharField(write_only=True)
+
+    def validate(self, attrs):
+        user = self.context["request"].user
+        old_password = attrs.get("old_password", "")
+        new_password = attrs.get("new_password", "")
+        new_password_confirm = attrs.get("new_password_confirm", "")
+
+        if not user.check_password(old_password):
+            raise ValidationError({"old_password": "Old password is incorrect"})
+
+        if new_password != new_password_confirm:
+            raise ValidationError({"new_password_confirm": "Passwords do not match"})
+
+        if old_password == new_password:
+            raise ValidationError({"new_password": "New password must be different from old password"})
+
+        validate_password(new_password, user=user)
+        attrs["user"] = user
+        return attrs
+
+    def create(self, validated_data):
+        user = validated_data["user"]
+        user.set_password(validated_data["new_password"])
+        user.save(update_fields=["password"])
+        return user
+
+
 class RegisterDetailsSerializer(serializers.ModelSerializer):
     first_name = serializers.CharField()
     last_name = serializers.CharField()
@@ -225,6 +295,18 @@ class RetrieveUserDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
         fields = ('first_name', 'last_name', 'username', 'email', 'phone_number', 'auth_type', 'user_status', 'user_role', 'is_staff', 'is_active', 'is_superuser', 'photo')
+
+
+class UserDetailsUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ("first_name", "last_name", "username", 'email', 'phone_number')
+
+    def validate_username(self, value):
+        user = self.instance
+        if CustomUser.objects.filter(username=value).exclude(pk=user.pk).exists():
+            raise ValidationError("Username is already taken")
+        return value
 
 
 class LoginSerializer(serializers.ModelSerializer):
@@ -296,3 +378,4 @@ class LogoutSerializer(serializers.Serializer):
             token.blacklist()
         except TokenError:
             self.fail("bad_token")
+

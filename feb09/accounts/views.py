@@ -1,7 +1,7 @@
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 
-from .serializers import RegisterSerializer, CodeVerificationSerializer, GetNewCodeSerializer, RegisterDetailsSerializer, UserChangePhotoSerializer, RetrieveUserDetailsSerializer, LoginSerializer, LogoutSerializer
+from .serializers import RegisterSerializer, CodeVerificationSerializer, GetNewCodeSerializer, ForgotPasswordSerializer, ResetPasswordSerializer, RegisterDetailsSerializer, UserDetailsUpdateSerializer, UserChangePhotoSerializer, RetrieveUserDetailsSerializer, LoginSerializer, LogoutSerializer
 from .models import CustomUser
 
 
@@ -45,6 +45,30 @@ class GetNewCodeView(generics.GenericAPIView):
         return Response({"message": "New code is sent."}, status=status.HTTP_200_OK)
 
 
+class ForgotPasswordView(generics.GenericAPIView):
+    permission_classes = [permissions.AllowAny]
+    serializer_class = ForgotPasswordSerializer
+    queryset = CustomUser.objects.all()
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response({"message": "Code is sent. Enter the code."}, status=status.HTTP_200_OK)
+
+
+class ResetPasswordView(generics.GenericAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = ResetPasswordSerializer
+    queryset = CustomUser.objects.all()
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response({"message": "Password is reset successfully."}, status=status.HTTP_200_OK)
+
+
 class RegisterDetailView(generics.GenericAPIView):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = RegisterDetailsSerializer
@@ -83,6 +107,18 @@ class UserView(generics.RetrieveAPIView):
         return Response(serializer.data)
 
 
+class UserDetailsUpdateView(generics.GenericAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = UserDetailsUpdateSerializer
+    queryset = CustomUser.objects.all()
+
+    def patch(self, request, *args, **kwargs):
+        serializer = self.get_serializer(instance=request.user, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response({"message": "User details are updated"}, status=status.HTTP_200_OK)
+
+
 
 class LoginView(generics.GenericAPIView):
     permission_classes = [permissions.AllowAny]
@@ -106,5 +142,3 @@ class LogoutView(generics.GenericAPIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(status=status.HTTP_204_NO_CONTENT)
-
-
