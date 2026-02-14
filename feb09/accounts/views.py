@@ -1,7 +1,7 @@
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 
-from .serializers import RegisterSerializer, CodeVerificationSerializer, RegisterDetailsSerializer, UserChangePhotoSerializer, RetrieveUserDetailsSerializer, LoginSerializer, LogoutSerializer
+from .serializers import RegisterSerializer, CodeVerificationSerializer, GetNewCodeSerializer, RegisterDetailsSerializer, UserChangePhotoSerializer, RetrieveUserDetailsSerializer, LoginSerializer, LogoutSerializer
 from .models import CustomUser
 
 
@@ -31,6 +31,18 @@ class CodeVerifyView(generics.GenericAPIView):
         tokens = serializer.save()
         tokens["message"] = "Code is verified"
         return Response(tokens, status=status.HTTP_200_OK)
+
+
+class GetNewCodeView(generics.GenericAPIView):
+    permission_classes = [permissions.AllowAny]
+    serializer_class = GetNewCodeSerializer
+    queryset = CustomUser.objects.all()
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response({"message": "New code is sent."}, status=status.HTTP_200_OK)
 
 
 class RegisterDetailView(generics.GenericAPIView):
@@ -94,6 +106,5 @@ class LogoutView(generics.GenericAPIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(status=status.HTTP_204_NO_CONTENT)
-
 
 

@@ -139,6 +139,47 @@ class CodeVerificationSerializer(serializers.ModelSerializer):
         return tokens
 
 
+class GetNewCodeSerializer(serializers.Serializer):
+    userinput = serializers.CharField(write_only=True)
+
+    def validate(self, attrs):
+        userinput = attrs.get("userinput", "").strip()
+        auth_type = check_if_email_or_phone(userinput)
+
+        if auth_type not in (VIA_PHONE, VIA_EMAIL):
+            raise ValidationError("Email or phone number required")
+
+        if auth_type == VIA_PHONE:
+            user = CustomUser.objects.filter(phone_number=userinput).first()
+        else:
+            user = CustomUser.objects.filter(email=userinput).first()
+
+        if not user:
+            raise ValidationError("User not found")
+        if user.user_status != CODE_VERIFY:
+            raise ValidationError("Unexpected status code")
+
+        attrs["user"] = user
+        attrs["auth_type"] = auth_type
+        return attrs
+
+    def create(self, validated_data):
+        user = validated_data["user"]
+        auth_type = validated_data["auth_type"]
+
+        code = user.create_code_verification(auth_type)
+        if auth_type == VIA_EMAIL:
+            send_mail(
+                subject="Code",
+                message=f"Code: {code}",
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[user.email],
+            )
+        else:
+            print(code)
+        return user
+
+
 class RegisterDetailsSerializer(serializers.ModelSerializer):
     first_name = serializers.CharField()
     last_name = serializers.CharField()
