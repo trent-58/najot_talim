@@ -1,0 +1,144 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ profile.full_name }} | Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'me/css/style.css' %}">
+</head>
+<body>
+<div class="bg-shape one"></div>
+<div class="bg-shape two"></div>
+<header class="header wrapper">
+    <a class="logo" href="#">{{ profile.full_name }}</a>
+    <nav>
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#experience">Experience</a>
+        <a href="#education">Education</a>
+        <a href="#languages">Languages</a>
+        <a href="#contact">Contact</a>
+    </nav>
+</header>
+
+<main class="wrapper">
+    <section class="hero">
+        <p class="eyebrow">Available for new opportunities</p>
+        <h1>{{ profile.role }}</h1>
+        <p class="lead">{{ profile.tagline }}</p>
+        <div class="hero-meta">
+            <div>
+                <span class="meta-label">Projects</span>
+                <strong>{{ project_count }}+</strong>
+            </div>
+            <div>
+                <span class="meta-label">Location</span>
+                <strong>{{ profile.location }}</strong>
+            </div>
+        </div>
+        <div class="cta-row">
+            <a class="btn primary" href="#contact">Get in touch</a>
+            <a class="btn ghost" href="{{ profile.resume_url }}">Resume</a>
+        </div>
+    </section>
+
+    <section id="about" class="card">
+        <h2>About</h2>
+        <p>{{ profile.bio }}</p>
+    </section>
+
+    <section id="skills" class="card">
+        <h2>Skills</h2>
+        <div class="skills-grid">
+            {% for skill in skills %}
+                <article class="skill-item">
+                    <div class="skill-head">
+                        <h3>{{ skill.name }}</h3>
+                        <span>{{ skill.level }}%</span>
+                    </div>
+                    <p>{{ skill.category }}</p>
+                    <div class="meter"><span style="width: {{ skill.level }}%"></span></div>
+                </article>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section id="projects" class="card">
+        <h2>Projects</h2>
+        <div class="projects-grid">
+            {% for project in projects %}
+                <article class="project-item {% if project.featured %}featured{% endif %}">
+                    <div class="project-top">
+                        <h3>{{ project.title }}</h3>
+                        {% if project.featured %}<span class="pill">Featured</span>{% endif %}
+                    </div>
+                    <p>{{ project.description }}</p>
+                    <small>{{ project.tech_stack }}</small>
+                </article>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section id="experience" class="card">
+        <h2>Experience</h2>
+        <div class="timeline">
+            {% for item in experiences %}
+                <article>
+                    <div class="timeline-head">
+                        <h3>{{ item.role }}</h3>
+                        <span>{{ item.period }}</span>
+                    </div>
+                    <p class="company">{{ item.company }}</p>
+                    <p>{{ item.summary }}</p>
+                </article>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section id="education" class="card">
+        <h2>Education</h2>
+        <div class="timeline">
+            {% for item in education %}
+                <article>
+                    <div class="timeline-head">
+                        <h3>{{ item.institution }}</h3>
+                        <span>{{ item.period }}</span>
+                    </div>
+                    <p>{{ item.details }}</p>
+                </article>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section id="languages" class="card">
+        <h2>Language Competencies</h2>
+        <div class="skills-grid">
+            {% for item in languages %}
+                <article class="skill-item">
+                    <div class="skill-head">
+                        <h3>{{ item.name }}</h3>
+                    </div>
+                    <p>{{ item.level }}</p>
+                </article>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section id="contact" class="card contact">
+        <h2>Contact</h2>
+        <p>Let’s discuss your next product build.</p>
+        <div class="contact-links">
+            <a href="mailto:{{ profile.email }}">{{ profile.email }}</a>
+            {% if profile.phone %}<a href="tel:{{ profile.phone|cut:' ' }}">{{ profile.phone }}</a>{% endif %}
+            <a href="{{ profile.github_url }}">GitHub</a>
+            <a href="{{ profile.linkedin_url }}">LinkedIn</a>
+        </div>
+    </section>
+</main>
+</body>
+</html>
